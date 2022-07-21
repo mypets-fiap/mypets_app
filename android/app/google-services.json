@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "180854016374-1lfarb4nus6lt79gp3c6s6qq0j1qpd04.apps.googleusercontent.com",
+              "client_id": "180854016374-07uapda2sbl930pnjfflfct9hfvv3bpq.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.fiap.mypets"
+                "bundle_id": "br.com.fiap.mypets.mypets"
               }
             }
           ]
@@ -67,10 +67,10 @@
               "client_type": 3
             },
             {
-              "client_id": "180854016374-1lfarb4nus6lt79gp3c6s6qq0j1qpd04.apps.googleusercontent.com",
+              "client_id": "180854016374-07uapda2sbl930pnjfflfct9hfvv3bpq.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "br.com.fiap.mypets"
+                "bundle_id": "br.com.fiap.mypets.mypets"
               }
             }
           ]
