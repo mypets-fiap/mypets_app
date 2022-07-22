@@ -23,8 +23,15 @@ class AppButton extends StatelessWidget {
         height: 44,
         child: ElevatedButton(
           onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            primary: AppColor.defaultColor,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              AppColor.defaultColor,
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
           ),
           child: Text(
             _label,
