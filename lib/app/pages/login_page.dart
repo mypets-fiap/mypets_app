@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 2975,
+              flex: 3250,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 46),
                 child: Form(
@@ -63,12 +63,12 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 2000,
+              flex: 1800,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: const [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 0),
+                    padding: EdgeInsets.only(bottom: 18),
                     child: AppTextButton(
                       label: "Não tem uma conta? Cadastre-se",
                       fontColor: AppColor.secundaryColor,
