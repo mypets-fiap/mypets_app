@@ -5,13 +5,16 @@ import 'package:mypets/app/pages/util/app_text_style.dart';
 class AppButton extends StatelessWidget {
   final String _label;
   final EdgeInsetsGeometry _padding;
+  final Function()? _onPressed;
 
-  const AppButton({
+  AppButton({
     Key? key,
     required String label,
     EdgeInsetsGeometry padding = const EdgeInsets.all(0),
+    required Function()? onPressed,
   })  : _label = label,
         _padding = padding,
+        _onPressed = onPressed,
         super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class AppButton extends StatelessWidget {
         width: double.infinity,
         height: 44,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: _onPressed,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
               AppColor.defaultColor,
