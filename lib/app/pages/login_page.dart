@@ -51,7 +51,10 @@ class LoginPage extends StatelessWidget {
                     children: const [
                       AppFormTextField(label: "E-mail ou Telefone"),
                       SizedBox(height: 15),
-                      AppFormTextField(label: "Senha"),
+                      AppFormTextField(
+                        label: "Senha",
+                        isPassword: true,
+                      ),
                       AppButton(
                         label: "Entrar",
                         padding: EdgeInsets.only(top: 25),
