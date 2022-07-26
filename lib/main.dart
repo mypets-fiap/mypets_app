@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
 
 void main() {
@@ -16,9 +17,13 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.immersiveSticky,
     );
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const LoginPage(),
+        "/homePage": (context) => const HomePage(),
+      },
     );
   }
 }

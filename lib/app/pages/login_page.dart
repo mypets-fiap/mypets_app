@@ -58,7 +58,9 @@ class LoginPage extends StatelessWidget {
                       AppButton(
                         label: "Entrar",
                         padding: const EdgeInsets.only(top: 25),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/homePage");
+                        },
                       ),
                       const AppTextButton(label: "Esqueci a senha?"),
                     ],
