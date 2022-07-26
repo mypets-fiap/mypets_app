@@ -4,16 +4,20 @@ import 'package:mypets/app/pages/util/app_text_style.dart';
 
 class AppFormTextField extends StatelessWidget {
   final String _label;
+  final bool _isPassword;
 
   const AppFormTextField({
     Key? key,
     required String label,
+    bool isPassword = false,
   })  : _label = label,
+        _isPassword = isPassword,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: _isPassword,
       decoration: InputDecoration(
         contentPadding:
             const EdgeInsets.symmetric(vertical: 15, horizontal: 14),
