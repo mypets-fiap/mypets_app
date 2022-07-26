@@ -48,18 +48,19 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 46),
                 child: Form(
                   child: Column(
-                    children: const [
-                      AppFormTextField(label: "E-mail ou Telefone"),
-                      SizedBox(height: 15),
-                      AppFormTextField(
+                    children: [
+                      const AppFormTextField(label: "E-mail ou Telefone"),
+                      const SizedBox(height: 15),
+                      const AppFormTextField(
                         label: "Senha",
                         isPassword: true,
                       ),
                       AppButton(
                         label: "Entrar",
-                        padding: EdgeInsets.only(top: 25),
+                        padding: const EdgeInsets.only(top: 25),
+                        onPressed: () {},
                       ),
-                      AppTextButton(label: "Esqueci a senha?"),
+                      const AppTextButton(label: "Esqueci a senha?"),
                     ],
                   ),
                 ),
