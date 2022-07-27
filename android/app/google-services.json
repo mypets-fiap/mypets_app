@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "180854016374",
+    "project_id": "mypets-fiap",
+    "storage_bucket": "mypets-fiap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180854016374:android:becd6b6d8ac0abdf6e1257",
+        "android_client_info": {
+          "package_name": "br.com.fiap.mypets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180854016374-hsv59uoscqeflck97b7dh5biquuvscfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjBy96FRanFFI4P2yeKowmJM22z3azsgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180854016374-hsv59uoscqeflck97b7dh5biquuvscfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180854016374-07uapda2sbl930pnjfflfct9hfvv3bpq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.fiap.mypets.mypets"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180854016374:android:de3c6701a868e9ce6e1257",
+        "android_client_info": {
+          "package_name": "br.com.fiap.mypets.mypets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180854016374-hsv59uoscqeflck97b7dh5biquuvscfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjBy96FRanFFI4P2yeKowmJM22z3azsgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180854016374-hsv59uoscqeflck97b7dh5biquuvscfo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180854016374-07uapda2sbl930pnjfflfct9hfvv3bpq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.fiap.mypets.mypets"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
