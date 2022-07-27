@@ -68,9 +68,7 @@ class AppFormTextField extends StatelessWidget {
             Radius.circular(10),
           ),
         ),
-        errorStyle: const TextStyle(
-          fontSize: 0,
-        ),
+        errorStyle: const TextStyle(fontSize: 0, height: -10),
       ),
       validator: (value) {
         if (value!.isEmpty) {
