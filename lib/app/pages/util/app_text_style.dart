@@ -33,4 +33,24 @@ class AppTextStyle {
       color: color,
     );
   }
+
+  static const headerHome = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: AppColor.defaultColor,
+  );
+
+  static const section = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: AppColor.defaultColor,
+  );
+
+  static const petName = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 12,
+    color: AppColor.defaultColor,
+  );
 }
