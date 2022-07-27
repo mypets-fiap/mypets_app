@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mypets/app/components/button/app_button.dart';
 import 'package:mypets/app/components/button/app_text_button.dart';
 import 'package:mypets/app/components/form/app_form_text_field.dart';
+import 'package:mypets/app/components/geral/app_logo_login_signup.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
-import 'package:mypets/app/pages/util/app_text_style.dart';
+import 'package:mypets/service/login_service.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+  final _form = GlobalKey<FormState>();
+  final TextEditingController _controllerLogin = TextEditingController();
+  final TextEditingController _controllerSenha = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,47 +26,54 @@ class LoginPage extends StatelessWidget {
           children: [
             Flexible(
               flex: 5125,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "MyPets",
-                    style: AppTextStyle.appName,
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    width: size.width * 0.4333,
-                    height: size.height * 0.195,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border:
-                          Border.all(color: AppColor.secundaryColor, width: 3),
-                    ),
-                  ),
-                ],
-              ),
+              child: AppLogoLoginSignUp(size: size),
             ),
             Flexible(
               flex: 3250,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 46),
                 child: Form(
+                  key: _form,
                   child: Column(
                     children: [
-                      const AppFormTextField(label: "E-mail ou Telefone"),
+                      AppFormTextField(
+                        label: "E-mail",
+                        controller: _controllerLogin,
+                      ),
                       const SizedBox(height: 15),
-                      const AppFormTextField(
+                      AppFormTextField(
                         label: "Senha",
                         isPassword: true,
+                        controller: _controllerSenha,
                       ),
                       AppButton(
                         label: "Entrar",
                         padding: const EdgeInsets.only(top: 25),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/homePage");
+                        onPressed: () async {
+                          if (_form.currentState!.validate()) {
+                            LoginService login = LoginService();
+
+                            if (await login.entrar(
+                              _controllerLogin.text,
+                              _controllerSenha.text,
+                            )) {
+                              Navigator.pushNamed(context, "/homePage");
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text(
+                                  "Verifique seu e-mail e senha",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ));
+                            }
+                          }
                         },
                       ),
-                      const AppTextButton(label: "Esqueci a senha?"),
+                      AppTextButton(
+                        label: "Esqueci a senha?",
+                        onPressed: () {},
+                      ),
                     ],
                   ),
                 ),
@@ -72,12 +83,15 @@ class LoginPage extends StatelessWidget {
               flex: 1800,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 18),
+                    padding: const EdgeInsets.only(bottom: 18),
                     child: AppTextButton(
                       label: "Não tem uma conta? Cadastre-se",
                       fontColor: AppColor.secundaryColor,
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/signUp");
+                      },
                     ),
                   ),
                 ],

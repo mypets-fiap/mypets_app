@@ -1,80 +1,50 @@
 import 'package:flutter/material.dart';
-
-import '../../util/authentication.dart';
-import '../pages/home.dart';
+import 'package:mypets/app/components/button/app_button.dart';
+import 'package:mypets/app/components/button/app_text_button.dart';
+import 'package:mypets/app/components/form/app_form_text_field.dart';
+import 'package:mypets/app/components/geral/app_logo_login_signup.dart';
+import 'package:mypets/app/pages/util/app_text_style.dart';
+import 'package:mypets/service/login_service.dart';
 
 class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(top: 20, left: 17, right: 17),
         children: <Widget>[
-          SizedBox(height: 80),
           // logo
-          Column(
-            children: [
-              FlutterLogo(
-                size: 55,
-              ),
-            ],
-          ),
-          SizedBox(height: 50),
-          Text(
-            'Welcome!',
-            style: TextStyle(fontSize: 24),
+          const AppLogoLoginSignUp(size: Size(500, 500)),
+          const SizedBox(height: 50),
+          const Text(
+            'Cadastre-se:',
+            style: AppTextStyle.headerHome,
           ),
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: SignupForm(),
           ),
 
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text('Already here  ?',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20)),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(' Get Logged in Now!',
-                          style: TextStyle(fontSize: 20, color: Colors.blue)),
-                    )
-                  ],
-                )
-              ],
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              AppTextButton(
+                label: "Já tem um acesso? Faça Login",
+                onPressed: () {
+                  Navigator.pushNamed(context, "/");
+                },
+              )
+            ],
           ),
         ],
-      ),
-    );
-  }
-
-  Container buildLogo() {
-    return Container(
-      height: 80,
-      width: 80,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.blue),
-      child: Center(
-        child: Text(
-          "T",
-          style: TextStyle(color: Colors.white, fontSize: 60.0),
-        ),
       ),
     );
   }
 }
 
 class SignupForm extends StatefulWidget {
-  SignupForm({Key? key}) : super(key: key);
+  const SignupForm({Key? key}) : super(key: key);
 
   @override
   _SignupFormState createState() => _SignupFormState();
@@ -83,112 +53,44 @@ class SignupForm extends StatefulWidget {
 class _SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
 
-  String? email;
-  String? password;
-  String? name;
-  bool _obscureText = false;
-
   bool agree = false;
 
-  final pass = new TextEditingController();
+  final _controllerFullName = TextEditingController();
+  final _controllerEmail = TextEditingController();
+  final _controllerPass = TextEditingController();
+  final _controllerConfirmPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var border = OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-        const Radius.circular(100.0),
-      ),
-    );
-
-    var space = SizedBox(height: 10);
     return Form(
       key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          // email
-          TextFormField(
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email_outlined),
-                labelText: 'Email',
-                border: border),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-            onSaved: (val) {
-              email = val;
-            },
-            keyboardType: TextInputType.emailAddress,
+          const SizedBox(height: 15),
+          AppFormTextField(
+            label: "Email",
+            controller: _controllerEmail,
           ),
-
-          space,
-
-          // password
-          TextFormField(
-            controller: pass,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              prefixIcon: Icon(Icons.lock_outline),
-              border: border,
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-                child: Icon(
-                  _obscureText ? Icons.visibility_off : Icons.visibility,
-                ),
-              ),
-            ),
-            onSaved: (val) {
-              password = val;
-            },
-            obscureText: !_obscureText,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+          const SizedBox(height: 15),
+          AppFormTextField(
+            label: "Senha",
+            controller: _controllerPass,
+            isPassword: true,
           ),
-          space,
-          // confirm passwords
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Confirm Password',
-              prefixIcon: Icon(Icons.lock_outline),
-              border: border,
-            ),
-            obscureText: true,
-            validator: (value) {
-              if (value != pass.text) {
-                return 'password not match';
-              }
-              return null;
-            },
+          const SizedBox(height: 15),
+          AppFormTextField(
+            label: "Confirme a Senha",
+            controller: _controllerConfirmPass,
+            isPassword: true,
+            controllerValidateEquals: _controllerPass,
           ),
-          space,
-          // name
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Full name',
-              prefixIcon: Icon(Icons.account_circle),
-              border: border,
-            ),
-            onSaved: (val) {
-              name = val;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter some name';
-              }
-              return null;
-            },
+          const SizedBox(height: 15),
+          AppFormTextField(
+            label: "Nome Completo",
+            controller: _controllerFullName,
           ),
+          const SizedBox(height: 15),
 
           Row(
             children: <Widget>[
@@ -200,48 +102,55 @@ class _SignupFormState extends State<SignupForm> {
                 },
                 value: agree,
               ),
-              Flexible(
+              const Flexible(
                 child: Text(
-                    'By creating account, I agree to Terms & Conditions and Privacy Policy.'),
+                    'Concordo com os Termos e Condições e a Política de Privacidade.'),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
 
           // signUP button
           SizedBox(
-            height: 50,
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-
-                  AuthenticationHelper()
-                      .signUp(email: email!, password: password!)
-                      .then((result) {
-                    if (result == null) {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Home()));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              height: 50,
+              width: double.infinity,
+              child: AppButton(
+                label: "Cadastrar",
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    if (agree == false) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text(
-                          result,
+                          "Aceite os termos",
                           style: TextStyle(fontSize: 16),
                         ),
                       ));
+                    } else {
+                      _formKey.currentState!.save();
+
+                      LoginService loginService = LoginService();
+
+                      if (await loginService.novoUsuario(
+                        _controllerEmail.text,
+                        _controllerPass.text,
+                      )) {
+                        Navigator.pushNamed(context, "/");
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Algo deu errado",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        );
+                      }
                     }
-                  });
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(24.0)))),
-              child: Text('Sign Up'),
-            ),
-          ),
+                  }
+                },
+              )),
         ],
       ),
     );

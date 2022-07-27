@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mypets/app/components/signup.dart';
 import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
 import 'package:mypets/firebase_options.dart';
@@ -23,8 +24,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const LoginPage(),
+        "/": (context) => LoginPage(),
         "/homePage": (context) => const HomePage(),
+        "/signUp": (context) => Signup(),
       },
     );
   }
