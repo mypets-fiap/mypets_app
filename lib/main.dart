@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mypets/app/components/signup.dart';
+import 'package:mypets/app/pages/signup.dart';
 import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
 import 'package:mypets/firebase_options.dart';
@@ -17,9 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.immersiveSticky,
-    );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
