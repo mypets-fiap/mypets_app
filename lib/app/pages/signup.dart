@@ -11,7 +11,7 @@ class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: const EdgeInsets.only(top: 20, left: 17, right: 17),
+        padding: const EdgeInsets.only(top: 50, left: 17, right: 17),
         children: <Widget>[
           // logo
           const AppLogoLoginSignUp(size: Size(500, 500)),
