@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 5125,
+              flex: 5000,
               child: AppLogoLoginSignUp(size: size),
             ),
             Flexible(
