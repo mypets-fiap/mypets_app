@@ -13,16 +13,17 @@ class HomePage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 17),
-            child: header(),
+            child: cabecalho(),
           ),
           pets(),
+          const SizedBox(height: 30),
         ],
       ),
     );
   }
 }
 
-Widget header() {
+Widget cabecalho() {
   return Column(
     children: [
       Row(
@@ -30,14 +31,6 @@ Widget header() {
           Padding(
             padding: EdgeInsets.only(top: 30, bottom: 35),
             child: Text("Olá, Caio", style: AppTextStyle.headerHome),
-          ),
-        ],
-      ),
-      Row(
-        children: const [
-          Padding(
-            padding: EdgeInsets.only(bottom: 15),
-            child: Text("Seus pets", style: AppTextStyle.section),
           ),
         ],
       ),
@@ -56,29 +49,41 @@ Widget pets() {
   pets.add("Squirtle");
   pets.add("Pidgey");
 
-  return SizedBox(
-    height: 75,
-    child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: pets.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == pets.length) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.add),
-                  Text(
-                    "Novo pet",
-                    style: AppTextStyle.petName,
-                  )
-                ],
-              ),
-            );
-          } else {
-            return PetCircle(name: pets[index]);
-          }
-        }),
+  return Column(
+    children: [
+      Row(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(bottom: 15, left: 17),
+            child: Text("Seus pets", style: AppTextStyle.section),
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 75,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: pets.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == pets.length) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.add),
+                      Text(
+                        "Novo pet",
+                        style: AppTextStyle.petName,
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return PetCircle(name: pets[index]);
+              }
+            }),
+      ),
+    ],
   );
 }
