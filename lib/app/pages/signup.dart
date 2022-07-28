@@ -7,6 +7,8 @@ import 'package:mypets/app/pages/util/app_text_style.dart';
 import 'package:mypets/service/login_service.dart';
 
 class Signup extends StatelessWidget {
+  const Signup({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

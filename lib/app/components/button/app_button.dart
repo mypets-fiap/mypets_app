@@ -7,7 +7,7 @@ class AppButton extends StatelessWidget {
   final EdgeInsetsGeometry _padding;
   final Function()? _onPressed;
 
-  AppButton({
+  const AppButton({
     Key? key,
     required String label,
     EdgeInsetsGeometry padding = const EdgeInsets.all(0),
