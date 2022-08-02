@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypets/app/pages/cadastro_pet_page.dart';
 import 'package:mypets/app/pages/signup.dart';
 import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => LoginPage(),
         "/homePage": (context) => const HomePage(),
-        "/signUp": (context) => Signup(),
+        "/signUp": (context) => const Signup(),
+        "/cadastroPet": (context) => CadastroPetPage(),
       },
     );
   }
