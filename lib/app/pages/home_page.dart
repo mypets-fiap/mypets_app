@@ -70,9 +70,14 @@ Widget pets() {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.add),
-                      Text(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/cadastroPet");
+                        },
+                      ),
+                      const Text(
                         "Novo pet",
                         style: AppTextStyle.petName,
                       )

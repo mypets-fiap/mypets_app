@@ -5,92 +5,100 @@ import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
 
 class CadastroPetPage extends StatelessWidget {
-  CadastroPetPage({Key? key}) : super(key: key);
-
-  final _form = GlobalKey<FormState>();
-
-  final _controllerNome = TextEditingController();
-  final _controllerEspecie = TextEditingController();
-  final _controllerRaca = TextEditingController();
-  final _controllerDataNascimento = TextEditingController();
-  final _controllerPorte = TextEditingController();
-  final _controllerPeso = TextEditingController();
-  final _controllerSexo = TextEditingController();
+  const CadastroPetPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20, left: 20),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_back_ios_sharp),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              CircleAvatar(
-                radius: 53,
-                backgroundColor: AppColor.secundaryColor,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: AppColor.background,
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: 50,
-                  ),
-                ),
-              ),
-              Text(
-                "Quem é seu\n novo pet?",
-                style: AppTextStyle.headerHome,
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 30),
-            child: Form(
-              key: _form,
-              child: Column(
-                children: [
-                  AppFormTextField(label: "Nome", controller: _controllerNome),
-                  const SizedBox(height: 15),
-                  AppFormTextField(
-                      label: "Espécie", controller: _controllerEspecie),
-                  const SizedBox(height: 15),
-                  AppFormTextField(label: "Raça", controller: _controllerRaca),
-                  const SizedBox(height: 15),
-                  AppFormTextField(
-                      label: "Data de nascimento",
-                      controller: _controllerDataNascimento),
-                  const SizedBox(height: 15),
-                  AppFormTextField(
-                      label: "Porte", controller: _controllerPorte),
-                  const SizedBox(height: 15),
-                  AppFormTextField(label: "Peso", controller: _controllerPeso),
-                  const SizedBox(height: 15),
-                  AppFormTextField(label: "Sexo", controller: _controllerSexo),
-                  const SizedBox(height: 20),
-                  AppButton(
-                    label: "Cadastrar",
-                    onPressed: () {
-                      if (_form.currentState!.validate()) {}
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _header(context),
+            _photoAndTitle(),
+            const SizedBox(height: 15),
+            _petForm(),
+          ],
+        ),
       ),
     );
   }
+}
+
+Widget _header(BuildContext context) {
+  return Row(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(top: 20, left: 20),
+        child: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_sharp),
+        ),
+      )
+    ],
+  );
+}
+
+Widget _photoAndTitle() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: const [
+      CircleAvatar(
+        radius: 53,
+        backgroundColor: AppColor.secundaryColor,
+        child: CircleAvatar(
+          radius: 50,
+          backgroundColor: AppColor.background,
+          child: Icon(
+            Icons.add_a_photo_rounded,
+            size: 50,
+          ),
+        ),
+      ),
+      Text(
+        "Quem é seu\n novo pet?",
+        style: AppTextStyle.headerHome,
+      ),
+    ],
+  );
+}
+
+Widget _petForm() {
+  final form = GlobalKey<FormState>();
+
+  final controllerNome = TextEditingController();
+  final controllerEspecie = TextEditingController();
+  final controllerRaca = TextEditingController();
+  final controllerDataNascimento = TextEditingController();
+  final controllerPorte = TextEditingController();
+  final controllerPeso = TextEditingController();
+  final controllerSexo = TextEditingController();
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 30),
+    child: Form(
+      key: form,
+      child: Column(
+        children: [
+          AppFormTextField(label: "Nome", controller: controllerNome),
+          AppFormTextField(label: "Espécie", controller: controllerEspecie),
+          AppFormTextField(label: "Raça", controller: controllerRaca),
+          AppFormTextField(
+            label: "Data de nascimento",
+            controller: controllerDataNascimento,
+          ),
+          AppFormTextField(label: "Porte", controller: controllerPorte),
+          AppFormTextField(label: "Peso", controller: controllerPeso),
+          AppFormTextField(label: "Sexo", controller: controllerSexo),
+          const SizedBox(height: 15),
+          AppButton(
+            label: "Cadastrar",
+            onPressed: () {
+              if (form.currentState!.validate()) {}
+            },
+          ),
+        ],
+      ),
+    ),
+  );
 }
