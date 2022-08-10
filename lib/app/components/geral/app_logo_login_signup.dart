@@ -27,6 +27,11 @@ class AppLogoLoginSignUp extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(color: AppColor.secundaryColor, width: 3),
           ),
+          child: Icon(
+            Icons.pets_rounded,
+            size: size.height * 0.1,
+            color: AppColor.secundaryColor,
+          ),
         ),
       ],
     );
