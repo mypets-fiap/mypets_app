@@ -22,66 +22,69 @@ class AppFormTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _controller,
-      obscureText: _isPassword,
-      decoration: InputDecoration(
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 14),
-        filled: true,
-        fillColor: AppColor.white,
-        labelStyle: AppTextStyle.inputLabel,
-        label: Text(_label),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColor.inputLabelColor,
-            width: 3,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: TextFormField(
+        controller: _controller,
+        obscureText: _isPassword,
+        decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 14),
+          filled: true,
+          fillColor: AppColor.white,
+          labelStyle: AppTextStyle.inputLabel,
+          label: Text(_label),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColor.inputLabelColor,
+              width: 3,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
           ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColor.inputLabelColor,
+              width: 3,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
           ),
+          errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 3,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          focusedErrorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 3,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          //errorStyle: const TextStyle(fontSize: 0, height: -10),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColor.inputLabelColor,
-            width: 3,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.red,
-            width: 3,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        focusedErrorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.red,
-            width: 3,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        errorStyle: const TextStyle(fontSize: 0, height: -10),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Insira o $_label';
-        }
-        if (_controllerValidateEquals != null) {
-          if (_controller.text != _controllerValidateEquals!.text) {
-            return 'O valor precisa ser igual.';
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Insira o $_label';
           }
-        }
+          if (_controllerValidateEquals != null) {
+            if (_controller.text != _controllerValidateEquals!.text) {
+              return 'O valor precisa ser igual.';
+            }
+          }
 
-        return null;
-      },
+          return null;
+        },
+      ),
     );
   }
 }
