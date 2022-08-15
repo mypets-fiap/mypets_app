@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mypets/app/components/button/app_button.dart';
+import 'package:mypets/app/components/form/app_form_dropdown.dart';
 import 'package:mypets/app/components/form/app_form_text_field.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
@@ -81,7 +82,11 @@ Widget _petForm() {
       child: Column(
         children: [
           AppFormTextField(label: "Nome", controller: controllerNome),
-          AppFormTextField(label: "Espécie", controller: controllerEspecie),
+          AppFormDropdown(
+            label: "Espécie",
+            items: const ["Cachorro", "Gato"],
+            controller: controllerEspecie,
+          ),
           AppFormTextField(label: "Raça", controller: controllerRaca),
           AppFormTextField(
             label: "Data de nascimento",
@@ -94,6 +99,7 @@ Widget _petForm() {
           AppButton(
             label: "Cadastrar",
             onPressed: () {
+              
               if (form.currentState!.validate()) {}
             },
           ),
