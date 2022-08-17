@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mypets/app/components/button/app_button.dart';
 import 'package:mypets/app/components/form/app_form_dropdown.dart';
+import 'package:mypets/app/components/form/app_form_radio_button.dart';
 import 'package:mypets/app/components/form/app_form_text_field.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
@@ -94,12 +95,15 @@ Widget _petForm() {
           ),
           AppFormTextField(label: "Porte", controller: controllerPorte),
           AppFormTextField(label: "Peso", controller: controllerPeso),
-          AppFormTextField(label: "Sexo", controller: controllerSexo),
+          AppFormRadioListTile(
+            controller: controllerSexo,
+            label: "Sexo",
+            listItem: const ["Macho", "Fêmea"],
+          ),
           const SizedBox(height: 15),
           AppButton(
             label: "Cadastrar",
             onPressed: () {
-              
               if (form.currentState!.validate()) {}
             },
           ),
