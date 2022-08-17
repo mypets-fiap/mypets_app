@@ -8,6 +8,7 @@ import 'package:mypets/app/pages/util/app_text_style.dart';
 import '../../model/event_pet.dart';
 import '../components/geral/pet_circle.dart';
 import '../components/geral/reminders_table.dart';
+import '../components/geral/services_list.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -18,19 +19,39 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 17),
-            child: header(),
-          ),
+          _paddingheader(),
           pets(),
           const Padding(
-            padding: EdgeInsets.only(left: 17, right: 17, top: 50),
-            child: RemindersTable(),
-          )
+            padding: EdgeInsets.only(top: 20, bottom: 10),
+            child: Text(
+              "Agenda",
+              style: AppTextStyle.section,
+              textAlign:TextAlign.left
+            ),
+          ),
+          RemindersTable(),
+          _paddingServicoTitle(),
+          ServicesList()
         ],
       ),
     );
   }
+
+  Widget _paddingheader(){
+    return Padding(
+      padding: const EdgeInsets.only(left: 17),
+      child: header(),
+    );
+  }
+
+  Widget _paddingServicoTitle(){
+    return Padding(
+      padding: EdgeInsets.only(top:20, bottom: 15),
+      child: Text("Serviços", style: AppTextStyle.section),
+    );
+  }
+
+
 }
 
 Widget header() {
@@ -39,7 +60,7 @@ Widget header() {
       Row(
         children: const [
           Padding(
-            padding: EdgeInsets.only(top: 30, bottom: 35),
+            padding: EdgeInsets.only(top: 30, bottom: 20),
             child: Text("Olá, Caio", style: AppTextStyle.headerHome),
           ),
         ],
@@ -47,7 +68,7 @@ Widget header() {
       Row(
         children: const [
           Padding(
-            padding: EdgeInsets.only(bottom: 15),
+            padding: EdgeInsets.only(bottom: 10),
             child: Text("Seus pets", style: AppTextStyle.section),
           ),
         ],

@@ -13,14 +13,10 @@ class RemindersTable extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return SizedBox(
-      height: 400,
+      height: 210,
       child: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 15),
-            child: Text("Agenda", style: AppTextStyle.section),
-          ),
           _createDataTableReminders()
         ],
       ),
@@ -30,11 +26,10 @@ class RemindersTable extends StatelessWidget {
   DataTable _createDataTableReminders() {
     return DataTable(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColor.secundaryColor, width: 1,style: BorderStyle.solid),
-            borderRadius: BorderRadius.circular(10.0)
+            border: Border.all(color: AppColor.secundaryColor, width: 1,style: BorderStyle.solid),
+            borderRadius: BorderRadius.circular(10.0),
+            color: AppColor.backgroudColor
         ),
-        headingRowColor: MaterialStateColor.resolveWith((states) => AppColor.backgroudColor),
-        dataRowColor: MaterialStateColor.resolveWith((states) => AppColor.backgroudColor),
         columns: _createColumns(),
         rows: _createRows());
   }
@@ -48,10 +43,14 @@ class RemindersTable extends StatelessWidget {
   }
 
   List<DataRow> _createRows() {
-    final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    final DateFormat formatter = DateFormat('dd/MM');
     List scheduleList = [];
     scheduleList.add(EventPet(DateTime.now(), "Dentista", "Rodolfo"));
     scheduleList.add(EventPet(DateTime.now(), "Banho", "Sheilo"));
+    scheduleList.add(EventPet(DateTime.now(), "Cirurgia", "Piggy"));
+    scheduleList.add(EventPet(DateTime.now(), "Cirurgia", "Piggy"));
+    scheduleList.add(EventPet(DateTime.now(), "Cirurgia", "Piggy"));
+    scheduleList.add(EventPet(DateTime.now(), "Cirurgia", "Piggy"));
     scheduleList.add(EventPet(DateTime.now(), "Cirurgia", "Piggy"));
 
     return [
