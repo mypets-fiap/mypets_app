@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mypets/model/servico.dart';
 
 import '../../pages/util/app_color.dart';
+import '../../pages/util/app_text_style.dart';
 
 class ItemCard extends StatelessWidget{
 
@@ -20,16 +21,21 @@ class ItemCard extends StatelessWidget{
             child: Container(
               padding: EdgeInsets.all(1),
               decoration: BoxDecoration(
-                  color: AppColor.borderSideColor,
+                  color: AppColor.secundaryColor,
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: Image.asset(servico.imagemPath)
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image(
+                  image: NetworkImage(servico.imagemPath),
+                ),
+              )
             )
         ),
-        Text(servico.nome)
+        Text(servico.nome,style: AppTextStyle.petName)
       ],
     );
   }
 }
 
-
+ 
