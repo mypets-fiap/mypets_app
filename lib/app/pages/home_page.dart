@@ -90,36 +90,43 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: 75,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: pets.length + 1,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == pets.length) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            Navigator.pushNamed(context, "/cadastroPet");
-                          },
-                        ),
-                        const Text(
-                          "Novo pet",
-                          style: AppTextStyle.petName,
-                        )
-                      ],
-                    ),
-                  );
-                } else {
-                  return PetCircle(name: pets[index]);
-                }
-              }),
-        ),
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: SizedBox(
+                height: 75,
+                width: 460,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: pets.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == pets.length) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, "/cadastroPet");
+                                },
+                              ),
+                              const Text(
+                                "Novo pet",
+                                style: AppTextStyle.petName,
+                              )
+                            ],
+                          ),
+                        );
+                      } else {
+                        return PetCircle(name: pets[index]);
+                      }
+                    }),
+              ))
+          ],
+        )
       ],
     );
   }
