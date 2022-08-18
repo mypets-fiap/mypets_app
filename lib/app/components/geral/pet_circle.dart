@@ -23,6 +23,7 @@ class PetCircle extends StatelessWidget {
             child: CircleAvatar(
               radius: 27,
               backgroundColor: AppColor.background,
+              child: Icon(Icons.pets_rounded),
             ),
           ),
           Padding(
