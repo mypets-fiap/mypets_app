@@ -2,31 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
 
-class AppFormTextField extends StatelessWidget {
+class AppFormDropdown extends StatelessWidget {
+  final List<String> _items;
   final String _label;
-  final bool _isPassword;
   final TextEditingController _controller;
-  final TextEditingController? _controllerValidateEquals;
 
-  const AppFormTextField({
+  const AppFormDropdown({
     Key? key,
     required String label,
-    bool isPassword = false,
+    required List<String> items,
     required TextEditingController controller,
-    TextEditingController? controllerValidateEquals,
   })  : _label = label,
-        _isPassword = isPassword,
+        _items = items,
         _controller = controller,
-        _controllerValidateEquals = controllerValidateEquals,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: TextFormField(
-        controller: _controller,
-        obscureText: _isPassword,
+      child: DropdownButtonFormField(
+        items: _items.map((String items) {
+          return DropdownMenuItem(
+            value: items,
+            child: Text(items),
+          );
+        }).toList(),
+        onChanged: (value) {
+          _controller.text = value.toString();
+        },
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 14),
@@ -72,18 +76,6 @@ class AppFormTextField extends StatelessWidget {
           ),
           //errorStyle: const TextStyle(fontSize: 0, height: -10),
         ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Insira o $_label';
-          }
-          if (_controllerValidateEquals != null) {
-            if (_controller.text != _controllerValidateEquals!.text) {
-              return 'O valor precisa ser igual.';
-            }
-          }
-
-          return null;
-        },
       ),
     );
   }

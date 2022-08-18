@@ -19,17 +19,18 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          _paddingheader(),
+          cabecalho(),
           _pets(),
           _tituloAgenda(),
           RemindersTable(),
           _paddingServicoTitle(),
           ServicesList()
+          const SizedBox(height: 30)
         ],
       ),
     );
   }
-
+  
   Widget _tituloAgenda(){
     return Column(
       children: [
@@ -49,31 +50,20 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _paddingheader(){
-    return Padding(
-      padding: const EdgeInsets.only(left: 17),
-      child: Column(
-        children: [
-          Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 20),
-                child: Text("Olá, Caio", style: AppTextStyle.headerHome),
-              ),
-            ],
-          ),
-          Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text("Seus pets", style: AppTextStyle.section),
-              ),
-            ],
+Widget cabecalho() {
+  return Column(
+    children: [
+      Row(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(top: 30, bottom: 35),
+            child: Text("Olá, Caio", style: AppTextStyle.headerHome),
           ),
         ],
       ),
-    );
-  }
+    ],
+  );
+}
 
   Widget _paddingServicoTitle(){
     return Padding(
@@ -93,30 +83,46 @@ class HomePage extends StatelessWidget {
     pets.add("Squirtle");
     pets.add("Pidgey");
 
-    return SizedBox(
-      height: 75,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: pets.length + 1,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == pets.length) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.add),
-                    Text(
-                      "Novo pet",
-                      style: AppTextStyle.petName,
-                    )
-                  ],
-                ),
-              );
-            } else {
-              return PetCircle(name: pets[index]);
-            }
-          }),
-    );
-  }
+  return Column(
+    children: [
+      Row(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(bottom: 15, left: 17),
+            child: Text("Seus pets", style: AppTextStyle.section),
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 75,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: pets.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == pets.length) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/cadastroPet");
+                        },
+                      ),
+                      const Text(
+                        "Novo pet",
+                        style: AppTextStyle.petName,
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return PetCircle(name: pets[index]);
+              }
+            }),
+      ),
+    ],
+  );
 }

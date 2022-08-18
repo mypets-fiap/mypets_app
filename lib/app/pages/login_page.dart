@@ -25,11 +25,11 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 5000,
+              flex: 4500,
               child: AppLogoLoginSignUp(size: size),
             ),
             Flexible(
-              flex: 3250,
+              flex: 3550,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 46),
                 child: Form(
@@ -40,7 +40,6 @@ class LoginPage extends StatelessWidget {
                         label: "E-mail",
                         controller: _controllerLogin,
                       ),
-                      const SizedBox(height: 15),
                       AppFormTextField(
                         label: "Senha",
                         isPassword: true,
@@ -80,7 +79,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1800,
+              flex: 1300,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
