@@ -1,11 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
-import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
 
-import '../../model/event_pet.dart';
 import '../components/geral/pet_circle.dart';
 import '../components/geral/reminders_table.dart';
 import '../components/geral/services_list.dart';
@@ -19,18 +16,18 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          cabecalho(),
+          _cabecalho(),
           _pets(),
           _tituloAgenda(),
           RemindersTable(),
           _paddingServicoTitle(),
-          ServicesList()
+          ServicesList(),
           const SizedBox(height: 30)
         ],
       ),
     );
   }
-  
+
   Widget _tituloAgenda(){
     return Column(
       children: [
@@ -50,20 +47,20 @@ class HomePage extends StatelessWidget {
     );
   }
 
-Widget cabecalho() {
-  return Column(
-    children: [
-      Row(
-        children: const [
-          Padding(
-            padding: EdgeInsets.only(top: 30, bottom: 35),
-            child: Text("Olá, Caio", style: AppTextStyle.headerHome),
-          ),
-        ],
-      ),
-    ],
-  );
-}
+  Widget _cabecalho() {
+    return Column(
+      children: [
+        Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(top: 30, bottom: 15, left: 10),
+              child: Text("Olá, Caio", style: AppTextStyle.headerHome),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   Widget _paddingServicoTitle(){
     return Padding(
@@ -83,46 +80,47 @@ Widget cabecalho() {
     pets.add("Squirtle");
     pets.add("Pidgey");
 
-  return Column(
-    children: [
-      Row(
-        children: const [
-          Padding(
-            padding: EdgeInsets.only(bottom: 15, left: 17),
-            child: Text("Seus pets", style: AppTextStyle.section),
-          ),
-        ],
-      ),
-      SizedBox(
-        height: 75,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: pets.length + 1,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == pets.length) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/cadastroPet");
-                        },
-                      ),
-                      const Text(
-                        "Novo pet",
-                        style: AppTextStyle.petName,
-                      )
-                    ],
-                  ),
-                );
-              } else {
-                return PetCircle(name: pets[index]);
-              }
-            }),
-      ),
-    ],
-  );
+    return Column(
+      children: [
+        Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(bottom: 15, left: 17),
+              child: Text("Seus pets", style: AppTextStyle.section),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 75,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: pets.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == pets.length) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/cadastroPet");
+                          },
+                        ),
+                        const Text(
+                          "Novo pet",
+                          style: AppTextStyle.petName,
+                        )
+                      ],
+                    ),
+                  );
+                } else {
+                  return PetCircle(name: pets[index]);
+                }
+              }),
+        ),
+      ],
+    );
+  }
 }
