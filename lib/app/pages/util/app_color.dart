@@ -6,6 +6,9 @@ class AppColor {
   static const Color secundaryColor = Color(0xff6CBAA2);
   static const Color inputLabelColor = Color(0xffACA9BB);
   static const Color white = Color(0xffffffff);
+  static const Color headerTableColor = Color(0xff000000);
+  static const Color borderSideColor = Color(0xffCCCCCC);
+  static const Color backgroudColor = Color(0xffF1F9F6);
 
   // Primeira versão
   // static const Color background = Color(0xffE7F6D1);
