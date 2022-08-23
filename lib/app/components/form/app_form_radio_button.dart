@@ -43,7 +43,7 @@ class _AppFormRadioListTile extends State<AppFormRadioListTile> {
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(
-                color: AppColor.inputLabelColor,
+                color: !state.hasError ? AppColor.inputLabelColor : Colors.red,
                 width: 3,
               ),
               borderRadius: const BorderRadius.all(
