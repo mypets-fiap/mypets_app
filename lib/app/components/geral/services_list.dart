@@ -22,11 +22,9 @@ class ServicesList extends StatelessWidget{
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: GridView.builder(
             itemCount: servicos.length,
+            primary: false,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 1.0,
-              mainAxisExtent: 120,
-              crossAxisSpacing: 40
+              crossAxisCount: 3
             ),
             itemBuilder: (context, index) => ItemCard(servico: servicos[index])
         ),

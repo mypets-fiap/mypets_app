@@ -8,7 +8,7 @@ class ItemCard extends StatelessWidget{
 
   final Servico servico;
 
-  const ItemCard({
+  const   ItemCard({
     Key? key,
     required this.servico,
   }): super(key:key);
@@ -27,12 +27,16 @@ class ItemCard extends StatelessWidget{
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: NetworkImage(servico.imagemPath),
+                  fit: BoxFit.fill,
+                  image: AssetImage(servico.imagemPath),
                 ),
               )
             )
         ),
-        Text(servico.nome,style: AppTextStyle.petName)
+        Padding(
+          padding: EdgeInsets.only(top: 5, bottom: 10),
+          child: Text(servico.nome,style: AppTextStyle.petName),
+        )
       ],
     );
   }
