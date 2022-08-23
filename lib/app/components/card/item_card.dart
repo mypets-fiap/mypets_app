@@ -4,14 +4,13 @@ import 'package:mypets/model/servico.dart';
 import '../../pages/util/app_color.dart';
 import '../../pages/util/app_text_style.dart';
 
-class ItemCard extends StatelessWidget{
-
+class ItemCard extends StatelessWidget {
   final Servico servico;
 
   const   ItemCard({
     Key? key,
     required this.servico,
-  }): super(key:key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,5 +40,3 @@ class ItemCard extends StatelessWidget{
     );
   }
 }
-
-

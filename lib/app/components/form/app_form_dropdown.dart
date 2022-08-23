@@ -31,6 +31,13 @@ class AppFormDropdown extends StatelessWidget {
         onChanged: (value) {
           _controller.text = value.toString();
         },
+        validator: (value) {
+          if (value == null) {
+            return 'Insira o $_label';
+          }
+          print(value);
+          return null;
+        },
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 14),
