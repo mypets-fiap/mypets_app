@@ -1,13 +1,9 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/servico.dart';
-import '../../pages/util/app_color.dart';
 import '../card/item_card.dart';
 
-class ServicesList extends StatelessWidget{
-
+class ServicesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Servico> servicos = [];
@@ -23,13 +19,12 @@ class ServicesList extends StatelessWidget{
         child: GridView.builder(
             itemCount: servicos.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 1.0,
-              mainAxisExtent: 120,
-              crossAxisSpacing: 40
-            ),
-            itemBuilder: (context, index) => ItemCard(servico: servicos[index])
-        ),
+                crossAxisCount: 3,
+                childAspectRatio: 1.0,
+                mainAxisExtent: 130,
+                crossAxisSpacing: 40),
+            itemBuilder: (context, index) =>
+                ItemCard(servico: servicos[index])),
       ),
     );
   }
