@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          child: Text('Welcome'),
+          child: const Text('Welcome'),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -17,12 +17,12 @@ class Home extends StatelessWidget {
           AuthenticationHelper()
               .signOut()
               .then((_) => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (contex) => LoginPage()),
-          ));
+                    context,
+                    MaterialPageRoute(builder: (contex) => LoginPage()),
+                  ));
         },
-        child: Icon(Icons.logout),
         tooltip: 'Logout',
+        child: Icon(Icons.logout),
       ),
     );
   }
