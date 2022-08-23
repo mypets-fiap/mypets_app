@@ -5,8 +5,9 @@ class PetRepository {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future savePet(Pet pet) async {
-    return db.collection("pets").add(pet.toJson()).then((DocumentReference doc) =>
-        print('DocumentSnapshot added with ID: ${doc.id}'));
+    return db.collection("pets").add(pet.toJson()).then(
+        (DocumentReference doc) =>
+            print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   Future update(Pet pet) async {
@@ -20,7 +21,7 @@ class PetRepository {
   }
 
   Future<List<Pet>> getAllPets() async {
-     var result = await db.collection("pets").get();
-     return result.docs.map((e) => Pet.fromSnapshot(e)).toList();
+    var result = await db.collection("pets").get();
+    return result.docs.map((e) => Pet.fromSnapshot(e)).toList();
   }
 }
