@@ -5,6 +5,7 @@ import 'package:mypets/app/pages/util/app_text_style.dart';
 class AppFormTextField extends StatelessWidget {
   final String _label;
   final bool _isPassword;
+  final bool _isNumeric;
   final TextEditingController _controller;
   final TextEditingController? _controllerValidateEquals;
 
@@ -12,10 +13,12 @@ class AppFormTextField extends StatelessWidget {
     Key? key,
     required String label,
     bool isPassword = false,
+    bool isNumeric = false,
     required TextEditingController controller,
     TextEditingController? controllerValidateEquals,
   })  : _label = label,
         _isPassword = isPassword,
+        _isNumeric = isNumeric,
         _controller = controller,
         _controllerValidateEquals = controllerValidateEquals,
         super(key: key);
@@ -27,6 +30,7 @@ class AppFormTextField extends StatelessWidget {
       child: TextFormField(
         controller: _controller,
         obscureText: _isPassword,
+        keyboardType: _isNumeric ? TextInputType.number : null,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 14),

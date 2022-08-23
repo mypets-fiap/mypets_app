@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mypets/app/pages/controller/home_controller.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
+import 'package:mypets/model/pet.dart';
 
 import '../components/geral/pet_circle.dart';
 import '../components/geral/reminders_table.dart';
@@ -64,15 +67,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _pets(BuildContext context) {
-    List<String> pets = [];
-    pets.add("Rodolfo");
-    pets.add("Sheilo");
-    pets.add("Corintiano");
-    pets.add("Piggy");
-    pets.add("Pidgey");
-    pets.add("Pikachu");
-    pets.add("Squirtle");
-    pets.add("Pidgey");
+    HomeController controller = HomeController();
 
     return Column(
       children: [
@@ -91,33 +86,32 @@ class HomePage extends StatelessWidget {
                 child: SizedBox(
                   height: 75,
                   width: MediaQuery.of(context).size.width - 15,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: pets.length + 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == pets.length) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 7),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, "/cadastroPet");
+                  child: Observer(
+                    builder: (context) {
+                      return FutureBuilder<List<Pet>>(
+                          future: controller.list,
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return _newPet(context, controller);
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else {
+                              List<Pet>? pets = snapshot.data;
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: pets!.length + 1,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == pets.length) {
+                                    return _newPet(context, controller);
+                                  } else {
+                                    return PetCircle(name: pets[index].nome);
+                                  }
                                 },
-                              ),
-                              const Text(
-                                "Novo pet",
-                                style: AppTextStyle.petName,
-                              )
-                            ],
-                          ),
-                        );
-                      } else {
-                        return PetCircle(name: pets[index]);
-                      }
+                              );
+                            }
+                          });
                     },
                   ),
                 ))
@@ -126,4 +120,27 @@ class HomePage extends StatelessWidget {
       ],
     );
   }
+}
+
+_newPet(BuildContext context, HomeController controller) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 7),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, "/cadastroPet").then(
+              (value) => controller.refreshList(),
+            );
+          },
+        ),
+        const Text(
+          "Novo pet",
+          style: AppTextStyle.petName,
+        )
+      ],
+    ),
+  );
 }
