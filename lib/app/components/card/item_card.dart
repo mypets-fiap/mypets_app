@@ -7,7 +7,7 @@ import '../../pages/util/app_text_style.dart';
 class ItemCard extends StatelessWidget {
   final Servico servico;
 
-  const ItemCard({
+  const   ItemCard({
     Key? key,
     required this.servico,
   }) : super(key: key);
@@ -18,18 +18,24 @@ class ItemCard extends StatelessWidget {
       children: [
         Expanded(
             child: Container(
-                padding: const EdgeInsets.all(1),
-                decoration: BoxDecoration(
-                    color: AppColor.secundaryColor,
-                    borderRadius: BorderRadius.circular(10)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image(
-                    image: AssetImage(servico.imagemPath),
-                    fit: BoxFit.cover,
-                  ),
-                ))),
-        Text(servico.nome, style: AppTextStyle.petName)
+              padding: EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                  color: AppColor.secundaryColor,
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image(
+                  fit: BoxFit.fill,
+                  image: AssetImage(servico.imagemPath),
+                ),
+              )
+            )
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 5, bottom: 10),
+          child: Text(servico.nome,style: AppTextStyle.petName),
+        )
       ],
     );
   }
