@@ -86,23 +86,36 @@ Widget _petForm() {
       key: form,
       child: Column(
         children: [
-          AppFormTextField(label: "Nome", controller: controllerNome),
+          AppFormTextField(
+            label: "Nome",
+            controller: controllerNome,
+          ),
           AppFormDropdown(
             label: "Espécie",
             items: const ["Cachorro", "Gato"],
             controller: controllerEspecie,
           ),
-          AppFormTextField(label: "Raça", controller: controllerRaca),
+          AppFormTextField(
+            label: "Raça",
+            controller: controllerRaca,
+          ),
           AppFormDateField(
             label: "Data de nascimento",
             controller: controllerDataNascimento,
           ),
-          AppFormTextField(label: "Porte", controller: controllerPorte),
-          AppFormTextField(label: "Peso", controller: controllerPeso),
+          AppFormTextField(
+            label: "Porte",
+            controller: controllerPorte,
+          ),
+          AppFormTextField(
+            label: "Peso",
+            controller: controllerPeso,
+          ),
           AppFormRadioListTile(
             controller: controllerSexo,
             label: "Sexo",
             listItem: const ["Macho", "Fêmea"],
+            isRequired: true,
           ),
           const SizedBox(height: 15),
           AppButton(
