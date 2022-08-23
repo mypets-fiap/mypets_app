@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mypets/app/components/button/app_button.dart';
 import 'package:mypets/app/components/form/app_form_text_field.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
@@ -41,27 +42,87 @@ Widget _header(BuildContext context) {
 }
 
 Widget _photoAndTitle() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: const [
-      CircleAvatar(
-        radius: 53,
-        backgroundColor: AppColor.secundaryColor,
-        child: CircleAvatar(
-          radius: 50,
-          backgroundColor: AppColor.background,
-          child: Icon(
-            Icons.add_a_photo_rounded,
-            size: 50,
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CircleAvatar(
+            radius: 53,
+            backgroundColor: AppColor.secundaryColor,
+            child: CircleAvatar(
+              radius: 50,
+              backgroundColor: AppColor.background,
+              child: IconButton(
+                onPressed: () {
+                  print('ccccc');
+                  teste();
+                },
+                icon: const Icon(Icons.add_a_photo_rounded),
+                iconSize: 50,
+              ),
+            ),
           ),
-        ),
-      ),
-      Text(
-        "Quem é seu\n novo pet?",
-        style: AppTextStyle.headerHome,
+          Text(
+            "Quem é seu\n novo pet?",
+            style: AppTextStyle.headerHome,
+          ),
+        ],
       ),
     ],
+    // FutureBuilder<void>(
+    //   future: retrieveLostData(),
+    //   builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.none:
+    //       case ConnectionState.waiting:
+    //         return const Text(
+    //           'You have not yet picked an image.',
+    //           textAlign: TextAlign.center,
+    //         );
+    //       case ConnectionState.done:
+    //         return _handlePreview();
+    //       default:
+    //         if (snapshot.hasError) {
+    //           return Text(
+    //             'Pick image/video error: ${snapshot.error}}',
+    //             textAlign: TextAlign.center,
+    //           );
+    //         } else {
+    //           return const Text(
+    //             'You have not yet picked an image.',
+    //             textAlign: TextAlign.center,
+    //           );
+    //         }
+    //     }
+    //   },
+    // )
   );
+}
+
+Future<void> retrieveLostData() async {
+  final LostDataResponse response = await ImagePicker().retrieveLostData();
+  print('response $response');
+  if (response.isEmpty) {
+    return;
+  }
+  // if (response.file != null) {
+  //   if (response.type == RetrieveType.video) {
+  //     isVideo = true;
+  //     await _playVideo(response.file);
+  //   } else {
+  //     isVideo = false;
+  //     setState(() {
+  //       if (response.files == null) {
+  //         _setImageFileListFromFile(response.file);
+  //       } else {
+  //         _imageFileList = response.files;
+  //       }
+  //     });
+  //   }
+  // } else {
+  //   _retrieveDataError = response.exception!.code;
+  // }
 }
 
 Widget _petForm() {
@@ -102,3 +163,81 @@ Widget _petForm() {
     ),
   );
 }
+
+void teste() async {
+  ImageSource source;
+  XFile? image;
+
+  ImageSource cameraSource = ImageSource.camera;
+  // ignore: unused_local_variable
+  ImageSource gallerySource = ImageSource.gallery;
+
+  image = await ImagePicker().pickImage(source: cameraSource);
+
+  if (image == null) return;
+
+  final imageTemp = XFile(image.path);
+  print('aaaaaaaaaaaaaaaaaaa ${imageTemp.path}');
+  print('bbbbbbbbbbbbb ${imageTemp}');
+}
+
+// Widget _handlePreview() {
+//   if (isVideo) {
+//     return _previewVideo();
+//   } else {
+//     return _previewImages();
+//   }
+// }
+
+// Widget _previewVideo() {
+//   final Text? retrieveError = _getRetrieveErrorWidget();
+//   if (retrieveError != null) {
+//     return retrieveError;
+//   }
+//   if (_controller == null) {
+//     return const Text(
+//       'You have not yet picked a video',
+//       textAlign: TextAlign.center,
+//     );
+//   }
+//   return Padding(
+//     padding: const EdgeInsets.all(10.0),
+//     child: AspectRatioVideo(_controller),
+//   );
+// }
+
+// Widget _previewImages() {
+//   final Text? retrieveError = _getRetrieveErrorWidget();
+//   if (retrieveError != null) {
+//     return retrieveError;
+//   }
+//   if (_imageFileList != null) {
+//     return Semantics(
+//       label: 'image_picker_example_picked_images',
+//       child: ListView.builder(
+//         key: UniqueKey(),
+//         itemBuilder: (BuildContext context, int index) {
+//           // Why network for web?
+//           // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
+//           return Semantics(
+//             label: 'image_picker_example_picked_image',
+//             child: kIsWeb
+//                 ? Image.network(_imageFileList![index].path)
+//                 : Image.file(File(_imageFileList![index].path)),
+//           );
+//         },
+//         itemCount: _imageFileList!.length,
+//       ),
+//     );
+//   } else if (_pickImageError != null) {
+//     return Text(
+//       'Pick image error: $_pickImageError',
+//       textAlign: TextAlign.center,
+//     );
+//   } else {
+//     return const Text(
+//       'You have not yet picked an image.',
+//       textAlign: TextAlign.center,
+//     );
+//   }
+// }
