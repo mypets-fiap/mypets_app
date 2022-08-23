@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
           _tituloAgenda(),
           const RemindersTable(),
           _paddingServicoTitle(),
-          ServicesList(),
+          const ServicesList(),
           const SizedBox(height: 30)
         ],
       ),

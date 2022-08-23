@@ -4,6 +4,8 @@ import '../../../model/servico.dart';
 import '../card/item_card.dart';
 
 class ServicesList extends StatelessWidget {
+  const ServicesList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     List<Servico> servicos = [];
@@ -20,10 +22,9 @@ class ServicesList extends StatelessWidget {
             itemCount: servicos.length,
             primary: false,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3
-            ),
-            itemBuilder: (context, index) => ItemCard(servico: servicos[index])
-        ),
+                crossAxisCount: 3),
+            itemBuilder: (context, index) =>
+                ItemCard(servico: servicos[index])),
       ),
     );
   }
