@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mypets/app/pages/cadastro_pet_page.dart';
 import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
@@ -20,6 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
       builder: (BuildContext context, Widget? child) {
         return SafeArea(child: child!);
       },
