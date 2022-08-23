@@ -1,13 +1,9 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/servico.dart';
-import '../../pages/util/app_color.dart';
 import '../card/item_card.dart';
 
-class ServicesList extends StatelessWidget{
-
+class ServicesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Servico> servicos = [];
