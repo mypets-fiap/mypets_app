@@ -96,7 +96,7 @@ class _AppFormRadioListTile extends State<AppFormRadioListTile> {
     for (String item in items) {
       list.add(
         SizedBox(
-          width: MediaQuery.of(context).size.width / 2.3,
+          width: MediaQuery.of(context).size.width / 2.4,
           child: ListTileTheme(
             horizontalTitleGap: 2,
             child: RadioListTile(
