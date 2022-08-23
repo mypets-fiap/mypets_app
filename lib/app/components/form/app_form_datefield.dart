@@ -37,6 +37,14 @@ class _AppFormDateFieldState extends State<AppFormDateField> {
             widget._controller.text = DateFormat("dd/MM/yyyy").format(date);
           }
         },
+        validator: (value) {
+          print(value);
+          if (value == null) {
+            return "${widget._label} é obrigatório";
+          }
+          print(value);
+          return null;
+        },
         controller: widget._controller,
         decoration: InputDecoration(
           labelText: widget._label,
