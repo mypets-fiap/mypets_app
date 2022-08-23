@@ -15,6 +15,7 @@ class CadastroPetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CadastroPetController controller = CadastroPetController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -22,7 +23,7 @@ class CadastroPetPage extends StatelessWidget {
             _header(context),
             _photoAndTitle(),
             const SizedBox(height: 15),
-            _petForm(),
+            _petForm(context, controller),
           ],
         ),
       ),
@@ -70,9 +71,9 @@ Widget _photoAndTitle() {
   );
 }
 
-Widget _petForm() {
+Widget _petForm(BuildContext context, CadastroPetController controller) {
   final form = GlobalKey<FormState>();
-  CadastroPetController controller = CadastroPetController();
+
   final controllerNome = TextEditingController();
   final controllerEspecie = TextEditingController();
   final controllerRaca = TextEditingController();
@@ -92,7 +93,7 @@ Widget _petForm() {
           ),
           AppFormDropdown(
             label: "Espécie",
-            items: const ["Cachorro", "Gato"],
+            items: const ["Cachorro / Cadela", "Gato(a)"],
             controller: controllerEspecie,
           ),
           AppFormTextField(
@@ -103,13 +104,15 @@ Widget _petForm() {
             label: "Data de nascimento",
             controller: controllerDataNascimento,
           ),
-          AppFormTextField(
+          AppFormDropdown(
             label: "Porte",
+            items: const ["Pequeno", "Médio", "Grande"],
             controller: controllerPorte,
           ),
           AppFormTextField(
-            label: "Peso",
+            label: "Peso (kl)",
             controller: controllerPeso,
+            isNumeric: true,
           ),
           AppFormRadioListTile(
             controller: controllerSexo,
@@ -131,6 +134,7 @@ Widget _petForm() {
                   controllerSexo.text,
                 );
                 controller.save(pet);
+                Navigator.pop(context);
               }
             },
           ),
