@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
 
 import '../components/geral/pet_circle.dart';
@@ -8,7 +6,6 @@ import '../components/geral/reminders_table.dart';
 import '../components/geral/services_list.dart';
 
 class HomePage extends StatelessWidget {
-
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -17,9 +14,9 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           _cabecalho(),
-          _pets(),
+          _pets(context),
           _tituloAgenda(),
-          RemindersTable(),
+          const RemindersTable(),
           _paddingServicoTitle(),
           ServicesList(),
           const SizedBox(height: 30)
@@ -28,18 +25,15 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _tituloAgenda(){
+  Widget _tituloAgenda() {
     return Column(
       children: [
         Row(
-          children: [
-            const Padding(
+          children: const [
+            Padding(
               padding: EdgeInsets.only(top: 20, bottom: 10, left: 20),
-              child: Text(
-                  "Agenda",
-                  style: AppTextStyle.section,
-                  textAlign:TextAlign.left
-              ),
+              child: Text("Agenda",
+                  style: AppTextStyle.section, textAlign: TextAlign.left),
             )
           ],
         )
@@ -62,14 +56,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _paddingServicoTitle(){
-    return Padding(
-      padding: EdgeInsets.only(top:20, bottom: 15),
+  Widget _paddingServicoTitle() {
+    return const Padding(
+      padding: EdgeInsets.only(top: 20, bottom: 15),
       child: Text("Serviços", style: AppTextStyle.section),
     );
   }
 
-  Widget _pets() {
+  Widget _pets(BuildContext context) {
     List<String> pets = [];
     pets.add("Rodolfo");
     pets.add("Sheilo");
@@ -93,11 +87,12 @@ class HomePage extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: SizedBox(
-                height: 75,
-                width: 460,
-                child: ListView.builder(
+                padding: const EdgeInsets.only(left: 15),
+                child: SizedBox(
+                  height: 75,
+                  width: MediaQuery.of(context).size.width - 15,
+                  child: ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: pets.length + 1,
                     itemBuilder: (BuildContext context, int index) {
@@ -123,8 +118,9 @@ class HomePage extends StatelessWidget {
                       } else {
                         return PetCircle(name: pets[index]);
                       }
-                    }),
-              ))
+                    },
+                  ),
+                ))
           ],
         )
       ],
