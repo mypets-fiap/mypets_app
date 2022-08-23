@@ -124,7 +124,7 @@ class HomePage extends StatelessWidget {
 
 _newPet(BuildContext context, HomeController controller) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 7),
+    padding: const EdgeInsets.symmetric(horizontal: 15),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
