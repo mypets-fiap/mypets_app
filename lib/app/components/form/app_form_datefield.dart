@@ -38,11 +38,9 @@ class _AppFormDateFieldState extends State<AppFormDateField> {
           }
         },
         validator: (value) {
-          print(value);
           if (value == null) {
             return "${widget._label} é obrigatório";
           }
-          print(value);
           return null;
         },
         controller: widget._controller,

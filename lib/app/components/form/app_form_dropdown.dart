@@ -35,7 +35,6 @@ class AppFormDropdown extends StatelessWidget {
           if (value == null) {
             return 'Insira o $_label';
           }
-          print(value);
           return null;
         },
         decoration: InputDecoration(
