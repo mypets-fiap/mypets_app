@@ -123,7 +123,7 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
           const SizedBox(height: 15),
           AppButton(
             label: "Cadastrar",
-            onPressed: () {
+            onPressed: () async {
               if (form.currentState!.validate()) {
                 Pet pet = Pet(
                   controllerNome.text,
