@@ -5,10 +5,12 @@ import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
 import 'package:mypets/app/pages/signup.dart';
 import 'package:mypets/firebase_options.dart';
+import 'package:mypets/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  setupInjection();
   runApp(const MyApp());
 }
 
