@@ -8,13 +8,15 @@ class Pet {
   final String raca;
   final DateTime dtNascimento;
   final String porte;
+  final String peso;
   final String sexo;
 
   DocumentReference? reference;
 
   var dateFormat = DateFormat("yyyy-MM-dd");
 
-  Pet(this.nome, this.especie, this.raca, this.dtNascimento, this.porte, this.sexo);
+  Pet(this.nome, this.especie, this.raca, this.dtNascimento, this.porte,
+      this.peso, this.sexo);
 
   Pet.fromJson(Map<String, dynamic> json)
       : nome = json['nome'],
@@ -22,6 +24,7 @@ class Pet {
         raca = json['raca'],
         dtNascimento = DateTime.parse(json['dtNascimento']),
         porte = json['porte'],
+        peso = json['peso'],
         sexo = json['sexo'];
 
   Pet.fromMap(Map<String, dynamic> map, {this.reference})
@@ -30,16 +33,18 @@ class Pet {
         raca = map['raca'],
         dtNascimento = DateTime.parse(map['dtNascimento']),
         porte = map['porte'],
+        peso = map['peso'],
         sexo = map['sexo'];
   Pet.fromSnapshot(QueryDocumentSnapshot snapshot)
       : this.fromMap(snapshot.data() as Map<String, dynamic>,
-      reference: snapshot.reference);
+            reference: snapshot.reference);
   Map<String, dynamic> toJson() => {
-    'nome': nome,
-    'especie': especie,
-    'raca': raca,
-    'dtNascimento': dateFormat.format(dtNascimento),
-    'porte': porte,
-    'sexo': sexo,
-  };
+        'nome': nome,
+        'especie': especie,
+        'raca': raca,
+        'dtNascimento': dateFormat.format(dtNascimento),
+        'porte': porte,
+        'peso': peso,
+        'sexo': sexo,
+      };
 }

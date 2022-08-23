@@ -131,6 +131,7 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
                   controllerRaca.text,
                   DateFormat("dd/MM/yyyy").parse(controllerDataNascimento.text),
                   controllerPorte.text,
+                  controllerPeso.text,
                   controllerSexo.text,
                 );
                 controller.save(pet);
