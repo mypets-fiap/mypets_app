@@ -1,15 +1,26 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:mypets/app/components/button/app_button.dart';
+import 'package:mypets/app/components/form/app_form_datefield.dart';
+import 'package:mypets/app/components/form/app_form_dropdown.dart';
+import 'package:mypets/app/components/form/app_form_radio_button.dart';
 import 'package:mypets/app/components/form/app_form_text_field.dart';
+import 'package:mypets/app/pages/controller/cadastro_pet_controller.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
+import 'package:mypets/model/pet.dart';
+import 'package:path/path.dart' as path;
 
 class CadastroPetPage extends StatelessWidget {
   const CadastroPetPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    CadastroPetController controller = CadastroPetController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -17,7 +28,7 @@ class CadastroPetPage extends StatelessWidget {
             _header(context),
             _photoAndTitle(),
             const SizedBox(height: 15),
-            _petForm(),
+            _petForm(controller),
           ],
         ),
       ),
@@ -55,15 +66,14 @@ Widget _photoAndTitle() {
               backgroundColor: AppColor.background,
               child: IconButton(
                 onPressed: () {
-                  print('ccccc');
-                  teste();
+                  pickImage();
                 },
                 icon: const Icon(Icons.add_a_photo_rounded),
                 iconSize: 50,
               ),
             ),
           ),
-          Text(
+          const Text(
             "Quem é seu\n novo pet?",
             style: AppTextStyle.headerHome,
           ),
@@ -125,9 +135,8 @@ Future<void> retrieveLostData() async {
   // }
 }
 
-Widget _petForm() {
+Widget _petForm(CadastroPetController controller) {
   final form = GlobalKey<FormState>();
-
   final controllerNome = TextEditingController();
   final controllerEspecie = TextEditingController();
   final controllerRaca = TextEditingController();
@@ -135,27 +144,59 @@ Widget _petForm() {
   final controllerPorte = TextEditingController();
   final controllerPeso = TextEditingController();
   final controllerSexo = TextEditingController();
+
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 30),
     child: Form(
       key: form,
       child: Column(
         children: [
-          AppFormTextField(label: "Nome", controller: controllerNome),
-          AppFormTextField(label: "Espécie", controller: controllerEspecie),
-          AppFormTextField(label: "Raça", controller: controllerRaca),
           AppFormTextField(
+            label: "Nome",
+            controller: controllerNome,
+          ),
+          AppFormDropdown(
+            label: "Espécie",
+            items: const ["Cachorro", "Gato"],
+            controller: controllerEspecie,
+          ),
+          AppFormTextField(
+            label: "Raça",
+            controller: controllerRaca,
+          ),
+          AppFormDateField(
             label: "Data de nascimento",
             controller: controllerDataNascimento,
           ),
-          AppFormTextField(label: "Porte", controller: controllerPorte),
-          AppFormTextField(label: "Peso", controller: controllerPeso),
-          AppFormTextField(label: "Sexo", controller: controllerSexo),
+          AppFormTextField(
+            label: "Porte",
+            controller: controllerPorte,
+          ),
+          AppFormTextField(
+            label: "Peso",
+            controller: controllerPeso,
+          ),
+          AppFormRadioListTile(
+            controller: controllerSexo,
+            label: "Sexo",
+            listItem: const ["Macho", "Fêmea"],
+            isRequired: true,
+          ),
           const SizedBox(height: 15),
           AppButton(
             label: "Cadastrar",
             onPressed: () {
-              if (form.currentState!.validate()) {}
+              if (form.currentState!.validate()) {
+                Pet pet = Pet(
+                  controllerNome.text,
+                  controllerEspecie.text,
+                  controllerRaca.text,
+                  DateFormat("dd/MM/yyyy").parse(controllerDataNascimento.text),
+                  controllerPorte.text,
+                  controllerSexo.text,
+                );
+                controller.save(pet);
+              }
             },
           ),
         ],
@@ -164,7 +205,9 @@ Widget _petForm() {
   );
 }
 
-void teste() async {
+void pickImage() async {
+  final storageRef = FirebaseStorage.instance.ref();
+
   ImageSource source;
   XFile? image;
 
@@ -176,9 +219,26 @@ void teste() async {
 
   if (image == null) return;
 
-  final imageTemp = XFile(image.path);
-  print('aaaaaaaaaaaaaaaaaaa ${imageTemp.path}');
-  print('bbbbbbbbbbbbb ${imageTemp}');
+  // print('bbbbbbbbbb ${image.path}');
+
+  // final imageTemp = XFile(image.path);
+  final imageTemp = File(image.path);
+  final String fileName = path.basename(image.path);
+
+  final mountainImagesRef = storageRef.child('/images/$fileName');
+
+  print('aaaaaaaaaaaaaaaaaaa $imageTemp');
+  print('bbbbbbbbbbbbbbbbbbb $mountainImagesRef');
+  print('ccccccccccccccccccc $fileName');
+
+  try {
+    //  await _auth.currentUser?.getIdToken();
+    // Future token = await AuthenticationHelper().getToken();
+    // print('LLLLLLLLLLLLLLLLLLLLLL ${token}');
+    await mountainImagesRef.putFile(imageTemp);
+  } catch (e) {
+    print('error');
+  }
 }
 
 // Widget _handlePreview() {

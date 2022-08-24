@@ -53,4 +53,17 @@ class AppTextStyle {
     fontSize: 12,
     color: AppColor.defaultColor,
   );
+
+  static const headerTable = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: AppColor.headerTableColor,
+  );
+
+  static const dataTable = TextStyle(
+    fontFamily: _fontFamily,
+    fontSize: 15,
+    color: AppColor.headerTableColor,
+  );
 }
