@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mypets/app/components/button/app_button.dart';
@@ -26,7 +27,7 @@ class CadastroPetPage extends StatelessWidget {
         child: Column(
           children: [
             _header(context),
-            _photoAndTitle(),
+            _photoAndTitle(controller, context),
             const SizedBox(height: 15),
             _petForm(controller),
           ],
@@ -52,7 +53,7 @@ Widget _header(BuildContext context) {
   );
 }
 
-Widget _photoAndTitle() {
+Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
   return Column(
     children: [
       Row(
@@ -64,13 +65,20 @@ Widget _photoAndTitle() {
             child: CircleAvatar(
               radius: 50,
               backgroundColor: AppColor.background,
-              child: IconButton(
-                onPressed: () {
-                  pickImage();
-                },
-                icon: const Icon(Icons.add_a_photo_rounded),
-                iconSize: 50,
-              ),
+              child: Observer(builder: (context) {
+                return controller.downloadUrl == null
+                    ? IconButton(
+                        onPressed: () {
+                          pickImage(controller);
+                        },
+                        icon: const Icon(Icons.add_a_photo_rounded),
+                        iconSize: 50,
+                      )
+                    : CircleAvatar(
+                        radius: 50,
+                        backgroundImage:
+                            NetworkImage("${controller.downloadUrl}"));
+              }),
             ),
           ),
           const Text(
@@ -80,59 +88,7 @@ Widget _photoAndTitle() {
         ],
       ),
     ],
-    // FutureBuilder<void>(
-    //   future: retrieveLostData(),
-    //   builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.none:
-    //       case ConnectionState.waiting:
-    //         return const Text(
-    //           'You have not yet picked an image.',
-    //           textAlign: TextAlign.center,
-    //         );
-    //       case ConnectionState.done:
-    //         return _handlePreview();
-    //       default:
-    //         if (snapshot.hasError) {
-    //           return Text(
-    //             'Pick image/video error: ${snapshot.error}}',
-    //             textAlign: TextAlign.center,
-    //           );
-    //         } else {
-    //           return const Text(
-    //             'You have not yet picked an image.',
-    //             textAlign: TextAlign.center,
-    //           );
-    //         }
-    //     }
-    //   },
-    // )
   );
-}
-
-Future<void> retrieveLostData() async {
-  final LostDataResponse response = await ImagePicker().retrieveLostData();
-  print('response $response');
-  if (response.isEmpty) {
-    return;
-  }
-  // if (response.file != null) {
-  //   if (response.type == RetrieveType.video) {
-  //     isVideo = true;
-  //     await _playVideo(response.file);
-  //   } else {
-  //     isVideo = false;
-  //     setState(() {
-  //       if (response.files == null) {
-  //         _setImageFileListFromFile(response.file);
-  //       } else {
-  //         _imageFileList = response.files;
-  //       }
-  //     });
-  //   }
-  // } else {
-  //   _retrieveDataError = response.exception!.code;
-  // }
 }
 
 Widget _petForm(CadastroPetController controller) {
@@ -205,7 +161,7 @@ Widget _petForm(CadastroPetController controller) {
   );
 }
 
-void pickImage() async {
+void pickImage(CadastroPetController controller) async {
   final storageRef = FirebaseStorage.instance.ref();
 
   ImageSource source;
@@ -219,85 +175,17 @@ void pickImage() async {
 
   if (image == null) return;
 
-  // print('bbbbbbbbbb ${image.path}');
-
-  // final imageTemp = XFile(image.path);
   final imageTemp = File(image.path);
   final String fileName = path.basename(image.path);
 
   final mountainImagesRef = storageRef.child('/images/$fileName');
 
-  print('aaaaaaaaaaaaaaaaaaa $imageTemp');
-  print('bbbbbbbbbbbbbbbbbbb $mountainImagesRef');
-  print('ccccccccccccccccccc $fileName');
-
   try {
-    //  await _auth.currentUser?.getIdToken();
-    // Future token = await AuthenticationHelper().getToken();
-    // print('LLLLLLLLLLLLLLLLLLLLLL ${token}');
     await mountainImagesRef.putFile(imageTemp);
+
+    controller.downloadUrl =
+        'https://firebasestorage.googleapis.com/v0/b/mypets-fiap.appspot.com/o/images%2F${fileName}?alt=media';
   } catch (e) {
     print('error');
   }
 }
-
-// Widget _handlePreview() {
-//   if (isVideo) {
-//     return _previewVideo();
-//   } else {
-//     return _previewImages();
-//   }
-// }
-
-// Widget _previewVideo() {
-//   final Text? retrieveError = _getRetrieveErrorWidget();
-//   if (retrieveError != null) {
-//     return retrieveError;
-//   }
-//   if (_controller == null) {
-//     return const Text(
-//       'You have not yet picked a video',
-//       textAlign: TextAlign.center,
-//     );
-//   }
-//   return Padding(
-//     padding: const EdgeInsets.all(10.0),
-//     child: AspectRatioVideo(_controller),
-//   );
-// }
-
-// Widget _previewImages() {
-//   final Text? retrieveError = _getRetrieveErrorWidget();
-//   if (retrieveError != null) {
-//     return retrieveError;
-//   }
-//   if (_imageFileList != null) {
-//     return Semantics(
-//       label: 'image_picker_example_picked_images',
-//       child: ListView.builder(
-//         key: UniqueKey(),
-//         itemBuilder: (BuildContext context, int index) {
-//           // Why network for web?
-//           // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
-//           return Semantics(
-//             label: 'image_picker_example_picked_image',
-//             child: kIsWeb
-//                 ? Image.network(_imageFileList![index].path)
-//                 : Image.file(File(_imageFileList![index].path)),
-//           );
-//         },
-//         itemCount: _imageFileList!.length,
-//       ),
-//     );
-//   } else if (_pickImageError != null) {
-//     return Text(
-//       'Pick image error: $_pickImageError',
-//       textAlign: TextAlign.center,
-//     );
-//   } else {
-//     return const Text(
-//       'You have not yet picked an image.',
-//       textAlign: TextAlign.center,
-//     );
-//   }
-// }
