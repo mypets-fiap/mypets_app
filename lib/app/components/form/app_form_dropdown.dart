@@ -16,12 +16,12 @@ class AppFormDropdown extends StatelessWidget {
         _items = items,
         _controller = controller,
         super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: DropdownButtonFormField(
+        value: _controller.text.isNotEmpty ? _controller.text : null,
         items: _items.map((String items) {
           return DropdownMenuItem(
             value: items,

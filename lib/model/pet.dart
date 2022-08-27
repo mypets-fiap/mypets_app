@@ -12,8 +12,6 @@ class Pet {
   final String sexo;
   final String? url;
 
-  DocumentReference? reference;
-
   var dateFormat = DateFormat("yyyy-MM-dd");
 
   Pet(this.nome, this.especie, this.raca, this.dtNascimento, this.porte,
@@ -30,8 +28,9 @@ class Pet {
         sexo = json['sexo'],
         url = json['url'];
 
-  Pet.fromMap(Map<String, dynamic> map, {this.reference})
-      : nome = map['nome'],
+  Pet.fromMap(Map<String, dynamic> map, reference)
+      : id = reference,
+        nome = map['nome'],
         especie = map['especie'],
         raca = map['raca'],
         dtNascimento = DateTime.parse(map['dtNascimento']),
@@ -39,9 +38,10 @@ class Pet {
         peso = map['peso'],
         sexo = map['sexo'],
         url = map['url'];
-  Pet.fromSnapshot(QueryDocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data() as Map<String, dynamic>,
-            reference: snapshot.reference);
+
+  Pet.fromSnapshot(QueryDocumentSnapshot snapshot, reference)
+      : this.fromMap(snapshot.data() as Map<String, dynamic>, reference);
+
   Map<String, dynamic> toJson() => {
         'nome': nome,
         'especie': especie,
