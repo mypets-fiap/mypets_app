@@ -24,6 +24,7 @@ class PetRepositoryFirebaseImpl implements PetRepository {
 
   @override
   Future<List<Pet>> getAllPets() async {
+    await Future.delayed(const Duration(seconds: 1));
     var result = await db.collection("pets").get();
     return result.docs.map((e) => Pet.fromSnapshot(e)).toList();
   }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:mobx/mobx.dart';
 import 'package:mypets/model/pet.dart';
 import 'package:mypets/service/pet_service.dart';
@@ -15,9 +13,7 @@ abstract class CadastroPetControllerBase with Store {
   @observable
   String? downloadUrl;
 
-  save(Pet pet) {
-    _petService.save(pet);
+  save(Pet pet) async {
+    await _petService.save(pet);
   }
-
-  updateImage(File image) {}
 }

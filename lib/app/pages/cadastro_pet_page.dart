@@ -144,7 +144,7 @@ Widget _formulario(BuildContext context, CadastroPetController controller) {
           const SizedBox(height: 15),
           AppButton(
             label: "Cadastrar",
-            onPressed: () async {
+            onPressed: () {
               if (form.currentState!.validate()) {
                 Pet pet = Pet(
                   controllerNome.text,
