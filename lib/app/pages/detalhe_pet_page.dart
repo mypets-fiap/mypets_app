@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mypets/app/components/geral/informacoes_pet.dart';
+import 'package:mypets/app/components/geral/pet_circle.dart';
 import 'package:mypets/app/components/geral/reminders_table.dart';
-import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
 import 'package:mypets/model/pet.dart';
 
@@ -49,26 +49,10 @@ Widget _cabecalho(BuildContext context) {
 
 Widget _fotoNome(Pet pet) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 30),
+    padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Row(
       children: [
-        CircleAvatar(
-          radius: 53,
-          backgroundColor: AppColor.secundaryColor,
-          child: pet.url == null
-              ? const CircleAvatar(
-                  radius: 50,
-                  backgroundColor: AppColor.background,
-                  child: Icon(
-                    Icons.pets,
-                    size: 50,
-                  ),
-                )
-              : CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(pet.url!),
-                ),
-        ),
+        PetCircle(tamanho: 53, pet: pet),
         const SizedBox(width: 40),
         Text(
           pet.nome,

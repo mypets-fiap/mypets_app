@@ -110,6 +110,13 @@ class HomePage extends StatelessWidget {
                                       tamanho: 30,
                                       pet: pets[index],
                                       exibeNome: true,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          '/detalhesPet',
+                                          arguments: {'pet': pets[index]},
+                                        );
+                                      },
                                     );
                                   }
                                 },
