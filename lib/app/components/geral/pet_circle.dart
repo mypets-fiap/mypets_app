@@ -50,7 +50,9 @@ class PetCircle extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.only(top: 0, bottom: 0),
                     child: Text(
-                      _pet!.nome,
+                      _pet!.nome.length < 7
+                          ? _pet!.nome
+                          : "${_pet!.nome.substring(0, 7)}...",
                       style: AppTextStyle.petName,
                     ),
                   )

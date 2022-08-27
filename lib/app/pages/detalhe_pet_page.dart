@@ -55,7 +55,7 @@ Widget _fotoNome(Pet pet) {
         PetCircle(tamanho: 53, pet: pet),
         const SizedBox(width: 40),
         Text(
-          pet.nome,
+          pet.nome.length < 15 ? pet.nome : "${pet.nome.substring(0, 15)}...",
           style: AppTextStyle.headerHome,
         ),
       ],
