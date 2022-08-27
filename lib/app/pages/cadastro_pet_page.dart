@@ -69,7 +69,7 @@ Widget _fotoETitulo(CadastroPetController controller, BuildContext context) {
                 return controller.downloadUrl == null
                     ? IconButton(
                         onPressed: () {
-                          pickImage(controller);
+                          pickImage(context, controller);
                         },
                         icon: const Icon(Icons.add_a_photo_rounded),
                         iconSize: 50,
@@ -167,16 +167,18 @@ Widget _formulario(BuildContext context, CadastroPetController controller) {
   );
 }
 
-void pickImage(CadastroPetController controller) async {
+void pickImage(BuildContext context, CadastroPetController controller) async {
   final storageRef = FirebaseStorage.instance.ref();
 
   XFile? image;
 
-  ImageSource cameraSource = ImageSource.camera;
+  //ImageSource cameraSource = ImageSource.camera;
   // ignore: unused_local_variable
-  ImageSource gallerySource = ImageSource.gallery;
+  //ImageSource gallerySource = ImageSource.gallery;
 
-  image = await ImagePicker().pickImage(source: cameraSource);
+  ImageSource imageSource = await _cameraGaleria(context);
+
+  image = await ImagePicker().pickImage(source: imageSource);
 
   if (image == null) return;
 
@@ -193,4 +195,45 @@ void pickImage(CadastroPetController controller) async {
   } catch (e) {
     controller.downloadUrl = "";
   }
+}
+
+Future<ImageSource> _cameraGaleria(BuildContext context) async {
+  ImageSource imageSource = ImageSource.camera;
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      imageSource = ImageSource.camera;
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.add_a_photo),
+                  ),
+                  const Text("Camera"),
+                ],
+              ),
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      imageSource = ImageSource.gallery;
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.folder),
+                  ),
+                  const Text("Galeria"),
+                ],
+              ),
+            ],
+          ),
+        ]);
+      });
+
+  return imageSource;
 }
