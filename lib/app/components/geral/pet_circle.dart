@@ -4,17 +4,20 @@ import 'package:mypets/app/pages/util/app_text_style.dart';
 import 'package:mypets/model/pet.dart';
 
 class PetCircle extends StatelessWidget {
-  final Pet _pet;
   final double _tamanho;
+  final Pet? _pet;
   final bool _exibeNome;
+  final Function()? _onTap;
 
   const PetCircle({
     Key? key,
     required double tamanho,
-    required Pet pet,
+    Pet? pet,
     bool exibeNome = false,
-  })  : _pet = pet,
-        _tamanho = tamanho,
+    Function()? onTap,
+  })  : _tamanho = tamanho,
+        _pet = pet,
+        _onTap = onTap,
         _exibeNome = exibeNome,
         super(key: key);
 
@@ -23,19 +26,13 @@ class PetCircle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/detalhesPet',
-            arguments: {'pet': _pet},
-          );
-        },
+        onTap: _onTap,
         child: Column(
           children: [
             CircleAvatar(
               radius: _tamanho,
               backgroundColor: AppColor.secundaryColor,
-              child: _pet.url == null
+              child: _pet != null && _pet!.url == null
                   ? CircleAvatar(
                       radius: _tamanho - 3,
                       backgroundColor: AppColor.background,
@@ -46,14 +43,16 @@ class PetCircle extends StatelessWidget {
                     )
                   : CircleAvatar(
                       radius: _tamanho - 3,
-                      backgroundImage: NetworkImage(_pet.url!),
+                      backgroundImage: NetworkImage(_pet!.url!),
                     ),
             ),
-            _exibeNome
+            _exibeNome && _pet != null
                 ? Padding(
                     padding: const EdgeInsets.only(top: 0, bottom: 0),
                     child: Text(
-                      _pet.nome,
+                      _pet!.nome.length < 7
+                          ? _pet!.nome
+                          : "${_pet!.nome.substring(0, 7)}...",
                       style: AppTextStyle.petName,
                     ),
                   )

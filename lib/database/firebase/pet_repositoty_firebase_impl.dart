@@ -7,9 +7,7 @@ class PetRepositoryFirebaseImpl implements PetRepository {
 
   @override
   savePet(Pet pet) async {
-    return await db.collection("pets").add(pet.toJson()).then(
-        (DocumentReference doc) =>
-            print('DocumentSnapshot added with ID: ${doc.id}'));
+    return await db.collection("pets").add(pet.toJson());
   }
 
   @override
@@ -26,6 +24,7 @@ class PetRepositoryFirebaseImpl implements PetRepository {
 
   @override
   Future<List<Pet>> getAllPets() async {
+    await Future.delayed(const Duration(seconds: 1));
     var result = await db.collection("pets").get();
     return result.docs.map((e) => Pet.fromSnapshot(e)).toList();
   }

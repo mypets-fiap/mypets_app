@@ -26,10 +26,10 @@ class CadastroPetPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _header(context),
-            _photoAndTitle(controller, context),
+            _cabecalho(context),
+            _fotoETitulo(controller, context),
             const SizedBox(height: 15),
-            _petForm(context, controller),
+            _formulario(context, controller),
           ],
         ),
       ),
@@ -37,7 +37,7 @@ class CadastroPetPage extends StatelessWidget {
   }
 }
 
-Widget _header(BuildContext context) {
+Widget _cabecalho(BuildContext context) {
   return Row(
     children: [
       Padding(
@@ -53,7 +53,7 @@ Widget _header(BuildContext context) {
   );
 }
 
-Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
+Widget _fotoETitulo(CadastroPetController controller, BuildContext context) {
   return Column(
     children: [
       Row(
@@ -69,14 +69,15 @@ Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
                 return controller.downloadUrl == null
                     ? IconButton(
                         onPressed: () {
-                          pickImage(controller);
+                          pickImage(context, controller);
                         },
                         icon: const Icon(Icons.add_a_photo_rounded),
                         iconSize: 50,
                       )
                     : CircleAvatar(
                         radius: 50,
-                        backgroundImage: NetworkImage(controller.downloadUrl!));
+                        backgroundImage: NetworkImage(controller.downloadUrl!),
+                      );
               }),
             ),
           ),
@@ -90,7 +91,7 @@ Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
   );
 }
 
-Widget _petForm(BuildContext context, CadastroPetController controller) {
+Widget _formulario(BuildContext context, CadastroPetController controller) {
   final form = GlobalKey<FormState>();
 
   final controllerNome = TextEditingController();
@@ -143,7 +144,7 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
           const SizedBox(height: 15),
           AppButton(
             label: "Cadastrar",
-            onPressed: () async {
+            onPressed: () {
               if (form.currentState!.validate()) {
                 Pet pet = Pet(
                   controllerNome.text,
@@ -166,31 +167,73 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
   );
 }
 
-void pickImage(CadastroPetController controller) async {
+void pickImage(BuildContext context, CadastroPetController controller) async {
   final storageRef = FirebaseStorage.instance.ref();
 
-  ImageSource source;
   XFile? image;
 
-  ImageSource cameraSource = ImageSource.camera;
+  //ImageSource cameraSource = ImageSource.camera;
   // ignore: unused_local_variable
-  ImageSource gallerySource = ImageSource.gallery;
+  //ImageSource gallerySource = ImageSource.gallery;
 
-  image = await ImagePicker().pickImage(source: cameraSource);
+  ImageSource imageSource = await _cameraGaleria(context);
+
+  image = await ImagePicker().pickImage(source: imageSource);
 
   if (image == null) return;
 
   final imageTemp = File(image.path);
   final String fileName = path.basename(image.path);
 
-  final mountainImagesRef = storageRef.child('/images/$fileName');
+  final imagesRef = storageRef.child('/images/$fileName');
 
   try {
-    await mountainImagesRef.putFile(imageTemp);
+    await imagesRef.putFile(imageTemp);
 
     controller.downloadUrl =
         'https://firebasestorage.googleapis.com/v0/b/mypets-fiap.appspot.com/o/images%2F$fileName?alt=media';
   } catch (e) {
-    print('error');
+    controller.downloadUrl = "";
   }
+}
+
+Future<ImageSource> _cameraGaleria(BuildContext context) async {
+  ImageSource imageSource = ImageSource.camera;
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      imageSource = ImageSource.camera;
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.add_a_photo),
+                  ),
+                  const Text("Camera"),
+                ],
+              ),
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      imageSource = ImageSource.gallery;
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.folder),
+                  ),
+                  const Text("Galeria"),
+                ],
+              ),
+            ],
+          ),
+        ]);
+      });
+
+  return imageSource;
 }

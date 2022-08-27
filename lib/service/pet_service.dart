@@ -9,8 +9,8 @@ class PetService {
     await petRepository.savePet(pet);
   }
 
-  Future<List<Pet>> getAll() {
-    return petRepository.getAllPets();
+  Future<List<Pet>> getAll() async {
+    return await petRepository.getAllPets();
   }
 
   // Pet get(String reference) {

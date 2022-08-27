@@ -79,48 +79,9 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: SizedBox(
-                  height: 75,
-                  width: MediaQuery.of(context).size.width - 15,
-                  child: Observer(
-                    builder: (context) {
-                      return FutureBuilder<List<Pet>>(
-                          future: controller.list,
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return _newPet(context, controller);
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else {
-                              List<Pet>? pets = snapshot.data;
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: pets!.length + 1,
-                                itemBuilder: (BuildContext context, int index) {
-                                  if (index == pets.length) {
-                                    return _newPet(context, controller);
-                                  } else {
-                                    return PetCircle(
-                                      tamanho: 30,
-                                      pet: pets[index],
-                                      exibeNome: true,
-                                    );
-                                  }
-                                },
-                              );
-                            }
-                          });
-                    },
-                  ),
-                ))
-          ],
-        )
+        Row(children: [
+          _listaPet(context, controller),
+        ])
       ],
     );
   }
@@ -145,6 +106,55 @@ _newPet(BuildContext context, HomeController controller) {
           style: AppTextStyle.petName,
         )
       ],
+    ),
+  );
+}
+
+Widget _listaPet(BuildContext context, HomeController controller) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 15),
+    child: SizedBox(
+      height: 75,
+      width: MediaQuery.of(context).size.width - 15,
+      child: Observer(
+        builder: (context) {
+          return FutureBuilder<List<Pet>>(
+            future: controller.list,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return _newPet(context, controller);
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else {
+                List<Pet>? pets = snapshot.data;
+                return ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: pets!.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == pets.length) {
+                      return _newPet(context, controller);
+                    } else {
+                      return PetCircle(
+                        tamanho: 30,
+                        pet: pets[index],
+                        exibeNome: true,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/detalhesPet',
+                            arguments: {'pet': pets[index]},
+                          );
+                        },
+                      );
+                    }
+                  },
+                );
+              }
+            },
+          );
+        },
+      ),
     ),
   );
 }
