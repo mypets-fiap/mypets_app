@@ -74,9 +74,15 @@ Widget _fotoETitulo(CadastroPetController controller, BuildContext context) {
                         icon: const Icon(Icons.add_a_photo_rounded),
                         iconSize: 50,
                       )
-                    : CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(controller.downloadUrl!),
+                    : GestureDetector(
+                        onTap: () {
+                          pickImage(context, controller);
+                        },
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage:
+                              NetworkImage(controller.downloadUrl!),
+                        ),
                       );
               }),
             ),
