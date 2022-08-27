@@ -26,10 +26,10 @@ class CadastroPetPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _header(context),
-            _photoAndTitle(controller, context),
+            _cabecalho(context),
+            _fotoETitulo(controller, context),
             const SizedBox(height: 15),
-            _petForm(context, controller),
+            _formulario(context, controller),
           ],
         ),
       ),
@@ -37,7 +37,7 @@ class CadastroPetPage extends StatelessWidget {
   }
 }
 
-Widget _header(BuildContext context) {
+Widget _cabecalho(BuildContext context) {
   return Row(
     children: [
       Padding(
@@ -53,7 +53,7 @@ Widget _header(BuildContext context) {
   );
 }
 
-Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
+Widget _fotoETitulo(CadastroPetController controller, BuildContext context) {
   return Column(
     children: [
       Row(
@@ -91,7 +91,7 @@ Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
   );
 }
 
-Widget _petForm(BuildContext context, CadastroPetController controller) {
+Widget _formulario(BuildContext context, CadastroPetController controller) {
   final form = GlobalKey<FormState>();
 
   final controllerNome = TextEditingController();
