@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
           _tituloAgenda(),
           const RemindersTable(),
           _paddingServicoTitle(),
-          ServicesList(),
+          const ServicesList(),
           const SizedBox(height: 30)
         ],
       ),
@@ -106,7 +106,11 @@ class HomePage extends StatelessWidget {
                                   if (index == pets.length) {
                                     return _newPet(context, controller);
                                   } else {
-                                    return PetCircle(name: pets[index].nome);
+                                    return PetCircle(
+                                      tamanho: 30,
+                                      pet: pets[index],
+                                      exibeNome: true,
+                                    );
                                   }
                                 },
                               );
@@ -124,7 +128,7 @@ class HomePage extends StatelessWidget {
 
 _newPet(BuildContext context, HomeController controller) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 7),
+    padding: const EdgeInsets.symmetric(horizontal: 15),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

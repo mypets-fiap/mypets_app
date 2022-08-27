@@ -2,8 +2,6 @@ import 'package:mypets/util/authentication.dart';
 
 class LoginService {
   Future<bool> entrar(String email, String pass) async {
-    print("Entrando...");
-
     bool sucesso = false;
 
     await AuthenticationHelper().signIn(email: email, password: pass).then(
