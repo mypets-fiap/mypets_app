@@ -7,9 +7,7 @@ class PetRepositoryFirebaseImpl implements PetRepository {
 
   @override
   savePet(Pet pet) async {
-    return await db.collection("pets").add(pet.toJson()).then(
-        (DocumentReference doc) =>
-            print('DocumentSnapshot added with ID: ${doc.id}'));
+    return await db.collection("pets").add(pet.toJson());
   }
 
   @override

@@ -170,7 +170,6 @@ Widget _formulario(BuildContext context, CadastroPetController controller) {
 void pickImage(CadastroPetController controller) async {
   final storageRef = FirebaseStorage.instance.ref();
 
-  ImageSource source;
   XFile? image;
 
   ImageSource cameraSource = ImageSource.camera;
@@ -192,6 +191,6 @@ void pickImage(CadastroPetController controller) async {
     controller.downloadUrl =
         'https://firebasestorage.googleapis.com/v0/b/mypets-fiap.appspot.com/o/images%2F$fileName?alt=media';
   } catch (e) {
-    print('error');
+    controller.downloadUrl = "";
   }
 }
