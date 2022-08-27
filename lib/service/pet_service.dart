@@ -13,7 +13,7 @@ class PetService {
     return await petRepository.getAllPets();
   }
 
-  // Pet get(String reference) {
-  //   return ;
-  // }
+  uptade(Pet pet) async {
+    await petRepository.update(pet);
+  }
 }

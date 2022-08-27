@@ -17,7 +17,7 @@ class DetalhesPet extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _cabecalho(context),
+            _cabecalho(context, pet),
             _fotoNome(pet),
             const SizedBox(height: 15),
             InformacoesPet(pet: pet),
@@ -31,19 +31,29 @@ class DetalhesPet extends StatelessWidget {
   }
 }
 
-Widget _cabecalho(BuildContext context) {
-  return Row(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20),
-        child: IconButton(
+Widget _cabecalho(BuildContext context, Pet pet) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios_sharp),
         ),
-      )
-    ],
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/cadastroPet',
+                arguments: {'pet': pet},
+              );
+            },
+            icon: const Icon(Icons.edit)),
+      ],
+    ),
   );
 }
 

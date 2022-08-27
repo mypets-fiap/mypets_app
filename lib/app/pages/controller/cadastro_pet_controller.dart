@@ -16,4 +16,8 @@ abstract class CadastroPetControllerBase with Store {
   save(Pet pet) async {
     await _petService.save(pet);
   }
+
+  update(Pet pet) async {
+    await _petService.uptade(pet);
+  }
 }

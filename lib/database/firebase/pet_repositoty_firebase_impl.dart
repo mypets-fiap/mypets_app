@@ -12,13 +12,14 @@ class PetRepositoryFirebaseImpl implements PetRepository {
 
   @override
   update(Pet pet) async {
+    print(pet.id);
     return db.collection("pets").doc(pet.id).set(pet.toJson());
   }
 
   @override
   Future<Pet> getPet(String id) async {
     return await db.collection("pets").doc(id).get().then((querySnapshot) {
-      return Pet.fromMap(querySnapshot.data()!);
+      return Pet.fromMap(querySnapshot.data()!, querySnapshot.reference.id);
     });
   }
 
@@ -26,6 +27,6 @@ class PetRepositoryFirebaseImpl implements PetRepository {
   Future<List<Pet>> getAllPets() async {
     await Future.delayed(const Duration(seconds: 1));
     var result = await db.collection("pets").get();
-    return result.docs.map((e) => Pet.fromSnapshot(e)).toList();
+    return result.docs.map((e) => Pet.fromSnapshot(e, e.reference.id)).toList();
   }
 }

@@ -107,6 +107,27 @@ Widget _formulario(BuildContext context, CadastroPetController controller) {
   final controllerPorte = TextEditingController();
   final controllerPeso = TextEditingController();
   final controllerSexo = TextEditingController();
+  String petEditId = '';
+
+  bool editando = false;
+  if (ModalRoute.of(context)?.settings.arguments != null) {
+    editando = true;
+    Map args = ModalRoute.of(context)?.settings.arguments as Map;
+    Pet petEdit;
+    petEdit = args['pet'];
+
+    controllerNome.text = petEdit.nome;
+    controllerEspecie.text = petEdit.especie;
+    controllerRaca.text = petEdit.raca;
+    controllerDataNascimento.text =
+        DateFormat("dd/MM/yyyy").format(petEdit.dtNascimento);
+    controllerPorte.text = petEdit.porte;
+    controllerPeso.text = petEdit.peso;
+    controllerSexo.text = petEdit.sexo;
+
+    controller.downloadUrl = petEdit.url;
+    petEditId = petEdit.id;
+  }
 
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 30),
@@ -162,8 +183,14 @@ Widget _formulario(BuildContext context, CadastroPetController controller) {
                   controllerSexo.text,
                   url: controller.downloadUrl,
                 );
-                controller.save(pet);
-                Navigator.pop(context);
+                if (editando) {
+                  pet.id = petEditId;
+                  controller.update(pet);
+                } else {
+                  controller.save(pet);
+                }
+
+                Navigator.pushNamed(context, "/homePage");
               }
             },
           ),
@@ -177,10 +204,6 @@ void pickImage(BuildContext context, CadastroPetController controller) async {
   final storageRef = FirebaseStorage.instance.ref();
 
   XFile? image;
-
-  //ImageSource cameraSource = ImageSource.camera;
-  // ignore: unused_local_variable
-  //ImageSource gallerySource = ImageSource.gallery;
 
   ImageSource imageSource = await _cameraGaleria(context);
 
