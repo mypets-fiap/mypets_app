@@ -12,7 +12,6 @@ class PetRepositoryFirebaseImpl implements PetRepository {
 
   @override
   update(Pet pet) async {
-    print(pet.id);
     return db.collection("pets").doc(pet.id).set(pet.toJson());
   }
 
