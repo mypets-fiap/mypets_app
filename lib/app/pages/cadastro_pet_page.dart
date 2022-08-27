@@ -76,7 +76,8 @@ Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
                       )
                     : CircleAvatar(
                         radius: 50,
-                        backgroundImage: NetworkImage(controller.downloadUrl!));
+                        backgroundImage: NetworkImage(controller.downloadUrl!),
+                      );
               }),
             ),
           ),
@@ -183,10 +184,10 @@ void pickImage(CadastroPetController controller) async {
   final imageTemp = File(image.path);
   final String fileName = path.basename(image.path);
 
-  final mountainImagesRef = storageRef.child('/images/$fileName');
+  final imagesRef = storageRef.child('/images/$fileName');
 
   try {
-    await mountainImagesRef.putFile(imageTemp);
+    await imagesRef.putFile(imageTemp);
 
     controller.downloadUrl =
         'https://firebasestorage.googleapis.com/v0/b/mypets-fiap.appspot.com/o/images%2F$fileName?alt=media';
