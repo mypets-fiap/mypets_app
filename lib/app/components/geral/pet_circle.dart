@@ -5,11 +5,17 @@ import 'package:mypets/model/pet.dart';
 
 class PetCircle extends StatelessWidget {
   final Pet _pet;
+  final double _tamanho;
+  final bool _exibeNome;
 
   const PetCircle({
     Key? key,
+    required double tamanho,
     required Pet pet,
+    bool exibeNome = false,
   })  : _pet = pet,
+        _tamanho = tamanho,
+        _exibeNome = exibeNome,
         super(key: key);
 
   @override
@@ -26,22 +32,32 @@ class PetCircle extends StatelessWidget {
         },
         child: Column(
           children: [
-            const CircleAvatar(
-              radius: 30,
+            CircleAvatar(
+              radius: _tamanho,
               backgroundColor: AppColor.secundaryColor,
-              child: CircleAvatar(
-                radius: 27,
-                backgroundColor: AppColor.background,
-                child: Icon(Icons.pets_rounded),
-              ),
+              child: _pet.url == null
+                  ? CircleAvatar(
+                      radius: _tamanho - 3,
+                      backgroundColor: AppColor.background,
+                      child: Icon(
+                        Icons.pets_rounded,
+                        size: _tamanho - 3,
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: _tamanho - 3,
+                      backgroundImage: NetworkImage(_pet.url!),
+                    ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 0, bottom: 0),
-              child: Text(
-                _pet.nome,
-                style: AppTextStyle.petName,
-              ),
-            )
+            _exibeNome
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 0, bottom: 0),
+                    child: Text(
+                      _pet.nome,
+                      style: AppTextStyle.petName,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

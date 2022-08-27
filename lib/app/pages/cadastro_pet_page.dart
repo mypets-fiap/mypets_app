@@ -76,7 +76,7 @@ Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
                       )
                     : CircleAvatar(
                         radius: 50,
-                        backgroundImage: NetworkImage(controller.downloadUrl));
+                        backgroundImage: NetworkImage(controller.downloadUrl!));
               }),
             ),
           ),
@@ -87,34 +87,6 @@ Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
         ],
       ),
     ],
-
-    // FutureBuilder<void>(
-    //   future: retrieveLostData(),
-    //   builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.none:
-    //       case ConnectionState.waiting:
-    //         return const Text(
-    //           'You have not yet picked an image.',
-    //           textAlign: TextAlign.center,
-    //         );
-    //       case ConnectionState.done:
-    //         return _handlePreview();
-    //       default:
-    //         if (snapshot.hasError) {
-    //           return Text(
-    //             'Pick image/video error: ${snapshot.error}}',
-    //             textAlign: TextAlign.center,
-    //           );
-    //         } else {
-    //           return const Text(
-    //             'You have not yet picked an image.',
-    //             textAlign: TextAlign.center,
-    //           );
-    //         }
-    //     }
-    //   },
-    // )
   );
 }
 
@@ -181,6 +153,7 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
                   controllerPorte.text,
                   controllerPeso.text,
                   controllerSexo.text,
+                  url: controller.downloadUrl,
                 );
                 controller.save(pet);
                 Navigator.pop(context);

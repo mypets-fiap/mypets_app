@@ -106,7 +106,11 @@ class HomePage extends StatelessWidget {
                                   if (index == pets.length) {
                                     return _newPet(context, controller);
                                   } else {
-                                    return PetCircle(pet: pets[index]);
+                                    return PetCircle(
+                                      tamanho: 30,
+                                      pet: pets[index],
+                                      exibeNome: true,
+                                    );
                                   }
                                 },
                               );

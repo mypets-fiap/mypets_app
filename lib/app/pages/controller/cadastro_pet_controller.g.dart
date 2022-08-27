@@ -13,13 +13,13 @@ mixin _$CadastroPetController on CadastroPetControllerBase, Store {
       Atom(name: 'CadastroPetControllerBase.downloadUrl', context: context);
 
   @override
-  String get downloadUrl {
+  String? get downloadUrl {
     _$downloadUrlAtom.reportRead();
     return super.downloadUrl;
   }
 
   @override
-  set downloadUrl(String value) {
+  set downloadUrl(String? value) {
     _$downloadUrlAtom.reportWrite(value, super.downloadUrl, () {
       super.downloadUrl = value;
     });

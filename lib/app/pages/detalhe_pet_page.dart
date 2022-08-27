@@ -18,7 +18,7 @@ class DetalhesPet extends StatelessWidget {
         child: Column(
           children: [
             _cabecalho(context),
-            _fotoNome(pet.nome),
+            _fotoNome(pet),
             const SizedBox(height: 15),
             InformacoesPet(pet: pet),
             const SizedBox(height: 15),
@@ -47,26 +47,31 @@ Widget _cabecalho(BuildContext context) {
   );
 }
 
-Widget _fotoNome(String nome) {
+Widget _fotoNome(Pet pet) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 30),
     child: Row(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 53,
           backgroundColor: AppColor.secundaryColor,
-          child: CircleAvatar(
-            radius: 50,
-            backgroundColor: AppColor.background,
-            child: Icon(
-              Icons.pets,
-              size: 50,
-            ),
-          ),
+          child: pet.url == null
+              ? const CircleAvatar(
+                  radius: 50,
+                  backgroundColor: AppColor.background,
+                  child: Icon(
+                    Icons.pets,
+                    size: 50,
+                  ),
+                )
+              : CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(pet.url!),
+                ),
         ),
         const SizedBox(width: 40),
         Text(
-          nome,
+          pet.nome,
           style: AppTextStyle.headerHome,
         ),
       ],
