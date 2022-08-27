@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mypets/app/components/button/app_button.dart';
 import 'package:mypets/app/components/form/app_form_datefield.dart';
@@ -9,6 +14,7 @@ import 'package:mypets/app/pages/controller/cadastro_pet_controller.dart';
 import 'package:mypets/app/pages/util/app_color.dart';
 import 'package:mypets/app/pages/util/app_text_style.dart';
 import 'package:mypets/model/pet.dart';
+import 'package:path/path.dart' as path;
 
 class CadastroPetPage extends StatelessWidget {
   const CadastroPetPage({Key? key}) : super(key: key);
@@ -21,7 +27,7 @@ class CadastroPetPage extends StatelessWidget {
         child: Column(
           children: [
             _header(context),
-            _photoAndTitle(),
+            _photoAndTitle(controller, context),
             const SizedBox(height: 15),
             _petForm(context, controller),
           ],
@@ -47,27 +53,68 @@ Widget _header(BuildContext context) {
   );
 }
 
-Widget _photoAndTitle() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: const [
-      CircleAvatar(
-        radius: 53,
-        backgroundColor: AppColor.secundaryColor,
-        child: CircleAvatar(
-          radius: 50,
-          backgroundColor: AppColor.background,
-          child: Icon(
-            Icons.add_a_photo_rounded,
-            size: 50,
+Widget _photoAndTitle(CadastroPetController controller, BuildContext context) {
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CircleAvatar(
+            radius: 53,
+            backgroundColor: AppColor.secundaryColor,
+            child: CircleAvatar(
+              radius: 50,
+              backgroundColor: AppColor.background,
+              child: Observer(builder: (context) {
+                return controller.downloadUrl == null
+                    ? IconButton(
+                        onPressed: () {
+                          pickImage(controller);
+                        },
+                        icon: const Icon(Icons.add_a_photo_rounded),
+                        iconSize: 50,
+                      )
+                    : CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(controller.downloadUrl));
+              }),
+            ),
           ),
-        ),
-      ),
-      Text(
-        "Quem é seu\n novo pet?",
-        style: AppTextStyle.headerHome,
+          const Text(
+            "Quem é seu\n novo pet?",
+            style: AppTextStyle.headerHome,
+          ),
+        ],
       ),
     ],
+
+    // FutureBuilder<void>(
+    //   future: retrieveLostData(),
+    //   builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.none:
+    //       case ConnectionState.waiting:
+    //         return const Text(
+    //           'You have not yet picked an image.',
+    //           textAlign: TextAlign.center,
+    //         );
+    //       case ConnectionState.done:
+    //         return _handlePreview();
+    //       default:
+    //         if (snapshot.hasError) {
+    //           return Text(
+    //             'Pick image/video error: ${snapshot.error}}',
+    //             textAlign: TextAlign.center,
+    //           );
+    //         } else {
+    //           return const Text(
+    //             'You have not yet picked an image.',
+    //             textAlign: TextAlign.center,
+    //           );
+    //         }
+    //     }
+    //   },
+    // )
   );
 }
 
@@ -81,6 +128,7 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
   final controllerPorte = TextEditingController();
   final controllerPeso = TextEditingController();
   final controllerSexo = TextEditingController();
+
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 30),
     child: Form(
@@ -143,4 +191,33 @@ Widget _petForm(BuildContext context, CadastroPetController controller) {
       ),
     ),
   );
+}
+
+void pickImage(CadastroPetController controller) async {
+  final storageRef = FirebaseStorage.instance.ref();
+
+  ImageSource source;
+  XFile? image;
+
+  ImageSource cameraSource = ImageSource.camera;
+  // ignore: unused_local_variable
+  ImageSource gallerySource = ImageSource.gallery;
+
+  image = await ImagePicker().pickImage(source: cameraSource);
+
+  if (image == null) return;
+
+  final imageTemp = File(image.path);
+  final String fileName = path.basename(image.path);
+
+  final mountainImagesRef = storageRef.child('/images/$fileName');
+
+  try {
+    await mountainImagesRef.putFile(imageTemp);
+
+    controller.downloadUrl =
+        'https://firebasestorage.googleapis.com/v0/b/mypets-fiap.appspot.com/o/images%2F$fileName?alt=media';
+  } catch (e) {
+    print('error');
+  }
 }
