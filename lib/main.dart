@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mypets/app/pages/cadastro_pet_page.dart';
+import 'package:mypets/app/pages/detalhe_pet_page.dart';
 import 'package:mypets/app/pages/home_page.dart';
 import 'package:mypets/app/pages/login_page.dart';
 import 'package:mypets/app/pages/signup.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         "/homePage": (context) => const HomePage(),
         "/signUp": (context) => const Signup(),
         "/cadastroPet": (context) => const CadastroPetPage(),
+        "/detalhesPet": (context) => const DetalhesPet(),
       },
     );
   }

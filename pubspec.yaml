@@ -19,11 +19,13 @@ dependencies:
   firebase_core: ^1.19.2
   cloud_firestore: ^3.3.0
   firebase_auth: ^3.5.1
-  provider: ^6.0.3
   intl: ^0.17.0
   get_it: ^7.2.0
   mobx: ^2.0.7+5
   flutter_mobx: ^2.0.6+1
+  image_picker: ^0.8.5+3
+  firebase_storage: ^10.3.6
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:
